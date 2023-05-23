@@ -1,9 +1,4 @@
-﻿using Microsoft.EntityFrameworkCore;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using MusicPlatform.DataLayer.Repositories;
 
 namespace MusicPlatform.DataLayer
 {
@@ -11,9 +6,14 @@ namespace MusicPlatform.DataLayer
     {
         private readonly MusicDbContext dbContext;
 
-        public UnitOfWork(MusicDbContext dbContext)
+        public ArtistRepository Artists { get; }
+        public SongRepository Songs { get; }
+
+        public UnitOfWork(MusicDbContext dbContext, ArtistRepository artists, SongRepository songs)
         {
             this.dbContext = dbContext ?? throw new ArgumentNullException(nameof(dbContext));
+            Artists = artists ?? throw new ArgumentNullException(nameof(artists));
+            Songs = songs ?? throw new ArgumentNullException(nameof(songs));
         }
 
         public void SaveChanges()
