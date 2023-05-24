@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using MusicPlatform.DataLayer;
+using MusicPlatform.DataLayer.Models;
 
 namespace MusicPlatform.Business.Services
 {
@@ -15,8 +16,13 @@ namespace MusicPlatform.Business.Services
 
         public ArtistService(UnitOfWork unitOfWork, AuthorizationService authService)
         {
-            this.unitOfWork = unitOfWork;
-            this.authService = authService;
+            this.unitOfWork = unitOfWork ?? throw new ArgumentNullException(nameof(unitOfWork));
+            this.authService = authService ?? throw new ArgumentNullException(nameof(authService));
+        }
+
+        public List<Artist> GetAll()
+        {
+            return unitOfWork.Artists.GetAll();
         }
     }
 }

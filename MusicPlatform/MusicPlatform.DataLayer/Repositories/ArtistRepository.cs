@@ -7,5 +7,10 @@ namespace MusicPlatform.DataLayer.Repositories
         public ArtistRepository(MusicDbContext dbContext) : base(dbContext)
         {
         }
+
+        public Artist GetByUsername(string username)
+        {
+            return GetRecords().FirstOrDefault(x => x.Username == username);
+        }
     }
 }

@@ -29,7 +29,7 @@ namespace MusicPlatform.Business.Services
 
             var roleClaim = new Claim("role", role);
             var idClaim = new Claim("userId", user.Id.ToString());
-            var infoClaim = new Claim("username", user.Email);
+            var infoClaim = new Claim("username", user.Username);
 
             var tokenDescriptior = new SecurityTokenDescriptor
             {
@@ -142,5 +142,4 @@ namespace MusicPlatform.Business.Services
             return areSame;
         }
     }
-}
 }

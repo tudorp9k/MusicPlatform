@@ -13,6 +13,6 @@ namespace MusicPlatform.Business.Dtos
         public string Password { get; set; }
         public string Name { get; set; }
         public string Description { get; set; }
-        public Genre Genre { get; set; }
+        public string Genre { get; set; }
     }
 }
