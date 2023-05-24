@@ -3,7 +3,7 @@ using MusicPlatform.DataLayer.Models;
 
 namespace MusicPlatform.DataLayer.Repositories
 {
-    internal class RepositoryBase<T> where T : BaseEntity
+    public class RepositoryBase<T> where T : BaseEntity
     {
         protected readonly MusicDbContext dbContext;
         private readonly DbSet<T> dbSet;

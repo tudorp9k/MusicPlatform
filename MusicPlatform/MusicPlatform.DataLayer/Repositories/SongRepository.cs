@@ -2,7 +2,7 @@
 
 namespace MusicPlatform.DataLayer.Repositories
 {
-    internal class SongRepository : RepositoryBase<Song>
+    public class SongRepository : RepositoryBase<Song>
     {
         public SongRepository(MusicDbContext dbContext) : base(dbContext)
         {

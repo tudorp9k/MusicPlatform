@@ -4,7 +4,7 @@ using System.Configuration;
 
 namespace MusicPlatform.DataLayer
 {
-    internal class MusicDbContext : DbContext
+    public class MusicDbContext : DbContext
     {
         public DbSet<Artist> Artists { get; set; }
         public DbSet<Song> Songs { get; set; }

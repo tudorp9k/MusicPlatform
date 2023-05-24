@@ -1,6 +1,6 @@
 ﻿namespace MusicPlatform.DataLayer.Enums
 {
-    internal enum Genre
+    public enum Genre
     {
         Rock,
         Pop,

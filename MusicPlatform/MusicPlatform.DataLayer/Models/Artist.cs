@@ -2,7 +2,7 @@
 
 namespace MusicPlatform.DataLayer.Models
 {
-    internal class Artist : BaseEntity
+    public class Artist : User
     {
         public string Name { get; set; }
         public string Description { get; set; }
