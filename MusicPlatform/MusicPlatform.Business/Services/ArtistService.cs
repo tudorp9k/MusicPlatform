@@ -5,6 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using MusicPlatform.Business.Dtos;
 using MusicPlatform.DataLayer;
+using MusicPlatform.DataLayer.Enums;
 using MusicPlatform.DataLayer.Models;
 
 namespace MusicPlatform.Business.Services
@@ -25,7 +26,60 @@ namespace MusicPlatform.Business.Services
         {
             var artists = unitOfWork.Artists.GetAll();
 
+            // TODO: Throw an exception and handle it
+            if (artists == null)
+            {
+                return null;
+            }
+
             return artists.Select(a => Mapper.MapToArtistDTO(a)).ToList();
+        }
+
+        public ArtistDto GetById(int artistId)
+        {
+            var artist = unitOfWork.Artists.GetById(artistId);
+
+            // TODO: Throw an exception and handle it
+            if (artist == null)
+            {
+                return null;
+            }
+
+            return Mapper.MapToArtistDTO(artist);
+        }
+
+        public bool UpdateArtist(ArtistUpdateDto payload)
+        {
+            if (payload == null)
+            {
+                return false;
+            }
+
+            var result = unitOfWork.Artists.GetById(payload.Id);
+            if (result == null)
+            {
+                return false;
+            }
+
+            result.Name = payload.Name;
+            result.Description = payload.Description;
+            result.Genre = (Genre)Enum.Parse(typeof(Genre), payload.Genre);
+
+            return true;
+        }
+
+        public bool DeleteArtist(int artistId)
+        {
+            var artist = unitOfWork.Artists.GetById(artistId);
+
+            if (artist == null)
+            {
+                return false;
+            }
+
+            unitOfWork.Artists.Remove(artist);
+
+            return true;
         }
     }
 }
