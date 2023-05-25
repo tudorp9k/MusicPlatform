@@ -50,7 +50,7 @@ namespace MusicPlatform.Business.Services
                 return;
             }
 
-            var hashedPassword = authService.HashPassword(registerData.Password);
+            var hashedPassword = authService.HashPassword(registerData.PasswordHash);
 
             var artist = new Artist
             {

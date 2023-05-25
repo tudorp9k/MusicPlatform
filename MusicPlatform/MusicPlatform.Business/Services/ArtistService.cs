@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using MusicPlatform.Business.Dtos;
 using MusicPlatform.DataLayer;
 using MusicPlatform.DataLayer.Models;
 
@@ -20,9 +21,11 @@ namespace MusicPlatform.Business.Services
             this.authService = authService ?? throw new ArgumentNullException(nameof(authService));
         }
 
-        public List<Artist> GetAll()
+        public List<ArtistDto> GetAll()
         {
-            return unitOfWork.Artists.GetAll();
+            var artists = unitOfWork.Artists.GetAll();
+
+            return artists.Select(a => Mapper.MapToArtistDTO(a)).ToList();
         }
     }
 }
