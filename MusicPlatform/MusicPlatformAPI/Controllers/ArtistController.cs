@@ -2,6 +2,7 @@
 using Microsoft.AspNetCore.Mvc;
 using MusicPlatform.Business.Dtos;
 using MusicPlatform.Business.Services;
+using MusicPlatformAPI.Filters;
 
 namespace MusicPlatformAPI.Controllers
 {
@@ -17,29 +18,17 @@ namespace MusicPlatformAPI.Controllers
         }
 
         [HttpGet("/get-all")]
-        [AllowAnonymous]
         public ActionResult<List<ArtistDto>> GetAll()
         {
             var artists = artistService.GetAll();
-
-            if (artists == null)
-            {
-                return BadRequest("No artists found");
-            }
 
             return Ok(artists);
         }
 
         [HttpGet("/get/{artistId}")]
-        [AllowAnonymous]
         public ActionResult<ArtistDto> Get(int artistId)
         {
             var artist = artistService.GetById(artistId);
-
-            if (artist == null)
-            {
-                return BadRequest("Artist not found");
-            }
 
             return Ok(artist);
         }

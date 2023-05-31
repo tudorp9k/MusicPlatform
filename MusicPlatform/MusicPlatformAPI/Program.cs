@@ -4,6 +4,7 @@ using Microsoft.OpenApi.Models;
 using MusicPlatform.Business.Services;
 using MusicPlatform.DataLayer;
 using MusicPlatform.DataLayer.Repositories;
+using MusicPlatformAPI.Filters;
 using System.Reflection;
 using System.Text;
 
@@ -36,7 +37,10 @@ builder.Services.AddAuthentication(options =>
 builder.Services.AddAuthorization();
 
 // Add services to the container.
-builder.Services.AddControllers();
+builder.Services.AddControllers(options =>
+{
+    options.Filters.Add(new ArtistNotFoundExceptionFilter());
+});
 
 builder.Services.AddDbContext<MusicDbContext>();
 builder.Services.AddScoped<UnitOfWork>();

@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using MusicPlatform.Business.Dtos;
+using MusicPlatform.Business.Exceptions;
 using MusicPlatform.DataLayer;
 using MusicPlatform.DataLayer.Enums;
 using MusicPlatform.DataLayer.Models;
@@ -26,10 +27,9 @@ namespace MusicPlatform.Business.Services
         {
             var artists = unitOfWork.Artists.GetAll();
 
-            // TODO: Throw an exception and handle it
             if (artists == null)
             {
-                return null;
+                throw new ArtistNotFoundException();
             }
 
             return artists.Select(a => Mapper.MapToArtistDTO(a)).ToList();
@@ -39,10 +39,9 @@ namespace MusicPlatform.Business.Services
         {
             var artist = unitOfWork.Artists.GetById(artistId);
 
-            // TODO: Throw an exception and handle it
             if (artist == null)
             {
-                return null;
+                throw new ArtistNotFoundException();
             }
 
             return Mapper.MapToArtistDTO(artist);
@@ -56,10 +55,6 @@ namespace MusicPlatform.Business.Services
             }
 
             var result = unitOfWork.Artists.GetById(payload.Id);
-            if (result == null)
-            {
-                return false;
-            }
 
             result.Name = payload.Name;
             result.Description = payload.Description;
@@ -74,11 +69,6 @@ namespace MusicPlatform.Business.Services
         public bool DeleteArtist(int artistId)
         {
             var artist = unitOfWork.Artists.GetById(artistId);
-
-            if (artist == null)
-            {
-                return false;
-            }
 
             unitOfWork.Artists.Remove(artist);
             unitOfWork.SaveChanges();
