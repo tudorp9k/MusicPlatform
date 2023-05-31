@@ -72,14 +72,14 @@ namespace MusicPlatform.Business.Services
 
             if (artist != null && authService.VerifyHashedPassword(artist.PasswordHash, payload.Password))
             {
-                return authService.GetToken(artist, artist.Role);
+                return authService.GetToken(artist);
             }
 
             var user = unitOfWork.Users.GetByUsername(payload.Username);
 
             if (user != null && authService.VerifyHashedPassword(user.PasswordHash, payload.Password))
             {
-                return authService.GetToken(user, user.Role);
+                return authService.GetToken(user);
             }
 
             return null;

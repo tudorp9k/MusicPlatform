@@ -2,6 +2,7 @@
 using System.Security.Claims;
 using System.Security.Cryptography;
 using System.Text;
+using Microsoft.Extensions.Configuration;
 using Microsoft.IdentityModel.Tokens;
 using MusicPlatform.DataLayer.Models;
 
@@ -15,7 +16,12 @@ namespace MusicPlatform.Business.Services
         private int PBKDF2SubkeyLength = 256 / 8;
         private int SaltSize = 128 / 8;
 
-        public string GetToken(User user, string role)
+        public AuthorizationService(IConfiguration config)
+        {
+            _securityKey = config["JWT:SecurityKey"];
+        }
+
+        public string GetToken(User user)
         {
             var jwtTokenHandler = new JwtSecurityTokenHandler();
 
@@ -27,7 +33,7 @@ namespace MusicPlatform.Business.Services
             var key = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(_securityKey));
             var credentials = new SigningCredentials(key, SecurityAlgorithms.HmacSha256);
 
-            var roleClaim = new Claim("role", role);
+            var roleClaim = new Claim("role", user.Role);
             var idClaim = new Claim("userId", user.Id.ToString());
             var infoClaim = new Claim("username", user.Username);
 
