@@ -56,6 +56,11 @@ namespace MusicPlatform.Business.Services
 
             var result = unitOfWork.Artists.GetById(payload.Id);
 
+            if (result == null)
+            {
+                throw new ArtistNotFoundException();
+            }
+
             result.Name = payload.Name;
             result.Description = payload.Description;
             result.Genre = (Genre)Enum.Parse(typeof(Genre), payload.Genre);
@@ -69,6 +74,11 @@ namespace MusicPlatform.Business.Services
         public bool DeleteArtist(int artistId)
         {
             var artist = unitOfWork.Artists.GetById(artistId);
+
+            if (artist == null)
+            {
+                throw new ArtistNotFoundException();
+            }
 
             unitOfWork.Artists.Remove(artist);
             unitOfWork.SaveChanges();
