@@ -6,8 +6,7 @@ using MusicPlatform.Business.Services;
 namespace MusicPlatformAPI.Controllers
 {
     [ApiController]
-    [Route("api/artists")]
-    [Authorize]
+    [Route("api/[controller]")]
     public class ArtistController : ControllerBase
     {
         private readonly ArtistService artistService;

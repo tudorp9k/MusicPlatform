@@ -5,7 +5,7 @@ using MusicPlatform.Business.Services;
 namespace MusicPlatformAPI.Controllers
 {
     [ApiController]
-    [Route("api/account")]
+    [Route("api/[controller]")]
     public class AccountController : ControllerBase
     {
         private readonly AuthenticationService authenticationService;
@@ -36,7 +36,7 @@ namespace MusicPlatformAPI.Controllers
 
             if (token != null)
             {
-                return Ok(new { Token = token });
+                return Ok(token);
             }
 
             return Unauthorized();

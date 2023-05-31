@@ -65,6 +65,9 @@ namespace MusicPlatform.Business.Services
             result.Description = payload.Description;
             result.Genre = (Genre)Enum.Parse(typeof(Genre), payload.Genre);
 
+            unitOfWork.Artists.Update(result);
+            unitOfWork.SaveChanges();
+
             return true;
         }
 
@@ -78,6 +81,7 @@ namespace MusicPlatform.Business.Services
             }
 
             unitOfWork.Artists.Remove(artist);
+            unitOfWork.SaveChanges();
 
             return true;
         }
