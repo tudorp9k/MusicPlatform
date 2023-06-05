@@ -21,5 +21,17 @@ namespace MusicPlatform.Business
                 Genre = artist.Genre.ToString()
             };
         }
+
+        public static SongDto MapToSongDTO(Song song)
+        {
+            return new SongDto
+            {
+                Name = song.Name,
+                Genre = song.Genre.ToString(),
+                Likes = song.Likes,
+                Streams = song.Streams,
+                ArtistId = song.ArtistId
+            };
+        }
     }
 }
