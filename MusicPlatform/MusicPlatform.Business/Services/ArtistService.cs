@@ -15,12 +15,9 @@ namespace MusicPlatform.Business.Services
     {
         private readonly UnitOfWork unitOfWork;
 
-        private readonly AuthorizationService authService;
-
-        public ArtistService(UnitOfWork unitOfWork, AuthorizationService authService)
+        public ArtistService(UnitOfWork unitOfWork)
         {
             this.unitOfWork = unitOfWork ?? throw new ArgumentNullException(nameof(unitOfWork));
-            this.authService = authService ?? throw new ArgumentNullException(nameof(authService));
         }
 
         public List<ArtistDto> GetAll()

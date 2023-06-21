@@ -7,6 +7,7 @@ using MusicPlatform.Business.Dtos;
 using MusicPlatform.Business.Exceptions;
 using MusicPlatform.DataLayer.Enums;
 using MusicPlatform.DataLayer;
+using MusicPlatform.DataLayer.Models;
 
 namespace MusicPlatform.Business.Services
 {
@@ -14,12 +15,9 @@ namespace MusicPlatform.Business.Services
     {
         private readonly UnitOfWork unitOfWork;
 
-        private readonly AuthorizationService authService;
-
-        public SongService(UnitOfWork unitOfWork, AuthorizationService authService)
+        public SongService(UnitOfWork unitOfWork)
         {
             this.unitOfWork = unitOfWork ?? throw new ArgumentNullException(nameof(unitOfWork));
-            this.authService = authService ?? throw new ArgumentNullException(nameof(authService));
         }
 
         public List<SongDto> GetAll()
@@ -40,8 +38,30 @@ namespace MusicPlatform.Business.Services
 
             if (song == null)
             {
-                throw new ArtistNotFoundException();
+                throw new SongNotFoundException();
             }
+
+            return Mapper.MapToSongDTO(song);
+        }
+
+        public SongDto AddSong(SongDto payload)
+        {
+            if (payload == null)
+            {
+                return null;
+            }
+
+            var song = new Song
+            {
+                Name = payload.Name,
+                Genre = (Genre)Enum.Parse(typeof(Genre), payload.Genre),
+                Likes = payload.Likes,
+                Streams = payload.Streams,
+                ArtistId = payload.ArtistId
+            };
+
+            unitOfWork.Songs.Insert(song);
+            unitOfWork.SaveChanges();
 
             return Mapper.MapToSongDTO(song);
         }

@@ -17,7 +17,8 @@ namespace MusicPlatformAPI.Controllers
             this.songService = songService ?? throw new ArgumentNullException(nameof(songService));
         }
 
-        [HttpGet("/song-get-all")]
+        [HttpGet("get-all")]
+        [AllowAnonymous]
         public ActionResult<List<SongDto>> GetAll()
         {
             var songs = songService.GetAll();
@@ -25,12 +26,27 @@ namespace MusicPlatformAPI.Controllers
             return Ok(songs);
         }
 
-        [HttpGet("/get/{songId}")]
+        [HttpGet("get/{songId}")]
+        [AllowAnonymous]
         public ActionResult<SongDto> Get(int songId)
         {
             var song = songService.GetById(songId);
 
             return Ok(song);
+        }
+
+        [HttpPost("add")]
+        [Authorize(Roles = "Admin,Artist")]
+        public IActionResult Add(SongDto song)
+        {
+            var result = songService.AddSong(song);
+
+            if (result == null)
+            {
+                return BadRequest("Song could not be added");
+            }
+
+            return Ok(result);
         }
 
         [HttpPatch("edit")]

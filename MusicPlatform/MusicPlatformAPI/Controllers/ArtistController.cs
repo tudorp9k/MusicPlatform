@@ -17,7 +17,8 @@ namespace MusicPlatformAPI.Controllers
             this.artistService = artistService ?? throw new ArgumentNullException(nameof(artistService));
         }
 
-        [HttpGet("/get-all")]
+        [HttpGet("get-all")]
+        [AllowAnonymous]
         public ActionResult<List<ArtistDto>> GetAll()
         {
             var artists = artistService.GetAll();
@@ -25,7 +26,8 @@ namespace MusicPlatformAPI.Controllers
             return Ok(artists);
         }
 
-        [HttpGet("/get/{artistId}")]
+        [HttpGet("get/{artistId}")]
+        [AllowAnonymous]
         public ActionResult<ArtistDto> Get(int artistId)
         {
             var artist = artistService.GetById(artistId);
