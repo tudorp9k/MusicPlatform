@@ -42,6 +42,14 @@ Constrângerile la ștergere:
 
 - Dacă un artist este șters din tabela "Artists", toate cântecele asociate acestuia din tabela "Songs" vor fi șterse în mod automat (constrângere de tip "CASCADE").
 
+- Migrarea este definită prin clasa `Updated_DB_Schema` care moștenește clasa `Migration` din namespace-ul `Microsoft.EntityFrameworkCore.Migrations`. Aceasta conține două metode suprascrise: `Up` și `Down`.
+
+  Metoda `Up` este responsabilă pentru efectuarea modificărilor în baza de date atunci când migrarea este aplicată. În acest caz, metoda adaugă patru coloane noi în tabela "Songs" și creează patru tabele noi: "Album", "EP", "Playlist" și "Single". De asemenea, se definesc chei primare și constrângeri de cheie externă pentru aceste tabele folosind metodele disponibile în clasa `MigrationBuilder`.
+
+  Metoda `Down` este responsabilă pentru revenirea modificărilor făcute în metoda `Up` în cazul în care migrarea este anulată sau revertată. În acest caz, se elimină coloanele și tabelele create în metoda `Up`.
+
+  Astfel, această migrare adaugă coloane noi în tabela "Songs" și creează patru tabele noi în baza de date, reprezentând entități precum albume, EP-uri, playlist-uri și single-uri. De asemenea, sunt definite relațiile dintre aceste entități și tabela "Songs" prin intermediul constrângerilor de cheie externă (foreign key constraints). Aceste modificări au rolul de a actualiza schema bazei de date pentru a reflecta aceste entități și relații în cadrul aplicației.
+
 Tipurile de date alese pentru fiecare câmp al tabelelor:
 
 - Id, ArtistId vor fi de tip întreg (int)
