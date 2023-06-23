@@ -2,7 +2,9 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using MusicPlatform.Business.Dtos;
 using MusicPlatform.Business.Services;
+using MusicPlatform.DataLayer.Models;
 using MusicPlatformAPI.Filters;
+using System.Security.Claims;
 
 namespace MusicPlatformAPI.Controllers
 {
@@ -39,6 +41,13 @@ namespace MusicPlatformAPI.Controllers
         [Authorize(Roles = "Admin,Artist")]
         public IActionResult Add(SongDto song)
         {
+            var userId = User.FindFirst("userId")?.Value;
+
+            if (song.ArtistId.ToString() != userId)
+            {
+                return Forbid();
+            }
+
             var result = songService.AddSong(song);
 
             if (result == null)
@@ -53,6 +62,13 @@ namespace MusicPlatformAPI.Controllers
         [Authorize(Roles = "Admin,Artist")]
         public IActionResult Edit(SongUpdateDto songUpdate)
         {
+            var userId = User.FindFirst("userId")?.Value;
+
+            if (songUpdate.ArtistId.ToString() != userId)
+            {
+                return Forbid();
+            }
+
             var result = songService.UpdateSong(songUpdate);
 
             if (!result)
@@ -67,6 +83,15 @@ namespace MusicPlatformAPI.Controllers
         [Authorize(Roles = "Admin,Artist")]
         public IActionResult Delete(int songId)
         {
+            var userId = User.FindFirst("userId")?.Value;
+
+            var song = songService.GetById(songId);
+
+            if (song.ArtistId.ToString() != userId)
+            {
+                return Forbid();
+            }
+
             var result = songService.DeleteSong(songId);
 
             if (!result)
