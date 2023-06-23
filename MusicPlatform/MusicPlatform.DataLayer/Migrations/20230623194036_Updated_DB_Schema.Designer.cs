@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using MusicPlatform.DataLayer;
 
@@ -11,9 +12,11 @@ using MusicPlatform.DataLayer;
 namespace MusicPlatform.DataLayer.Migrations
 {
     [DbContext(typeof(MusicDbContext))]
-    partial class MusicDbContextModelSnapshot : ModelSnapshot
+    [Migration("20230623194036_Updated_DB_Schema")]
+    partial class Updated_DB_Schema
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -82,6 +85,9 @@ namespace MusicPlatform.DataLayer.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
 
+                    b.Property<int>("ArtistId")
+                        .HasColumnType("int");
+
                     b.Property<string>("Description")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
@@ -90,12 +96,9 @@ namespace MusicPlatform.DataLayer.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<int>("UserId")
-                        .HasColumnType("int");
-
                     b.HasKey("Id");
 
-                    b.HasIndex("UserId");
+                    b.HasIndex("ArtistId");
 
                     b.ToTable("Playlist");
                 });
@@ -252,13 +255,13 @@ namespace MusicPlatform.DataLayer.Migrations
 
             modelBuilder.Entity("MusicPlatform.DataLayer.Models.Playlist", b =>
                 {
-                    b.HasOne("MusicPlatform.DataLayer.Models.User", "User")
+                    b.HasOne("MusicPlatform.DataLayer.Models.Artist", "Artist")
                         .WithMany()
-                        .HasForeignKey("UserId")
+                        .HasForeignKey("ArtistId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.Navigation("User");
+                    b.Navigation("Artist");
                 });
 
             modelBuilder.Entity("MusicPlatform.DataLayer.Models.Song", b =>
