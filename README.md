@@ -52,6 +52,14 @@ Tipurile de date alese pentru fiecare câmp al tabelelor:
 
   
 
+  ![alt text](74abc51db99c0460a5d78a1d3cffcacb.png)
+
+  
+
+  ![image](1b4009141607b785ea82b4859f05e49b.png)
+
+  
+
 ## Capitolul 2: Implementarea autentificării și autorizării
 
 Pentru implementarea autentificării și autorizării în cadrul proiectului "Music Platform" s-au creat clasele `AuthorizationService` și `AuthenticationService` cu funcționalități specifice.
@@ -203,6 +211,37 @@ Clasa ArtistController gestionează acțiunile legate de artiști. Rutele defini
 Clasa SongController gestionează acțiunile legate de cântece. Rutele definite sunt /api/song/get-all, /api/song/get/{songId}, /api/song/add, /api/song/edit și /api/song/delete. Metodele GetAll și Get returnează toate cântecele sau un cântec specific în funcție de ID-ul acestuia. Metoda Add permite adăugarea unui cântec nou, cu condiția ca utilizatorul autentificat să fie un "Admin" sau "Artist" și să fie proprietarul cântecului. Metoda Edit permite actualizarea unui cântec existent în funcție de ID-ul acestuia și proprietarul să fie "Admin" sau "Artist". Metoda Delete permite ștergerea unui cântec în funcție de ID-ul acestuia și proprietarul să fie "Admin" sau "Artist".
 
 Acestea sunt implementările de bază ale controllerelor API în cadrul proiectului "Music Platform". Acestea oferă funcționalități esențiale pentru gestionarea utilizatorilor, artiștilor și cântecelor prin intermediul aplicației web.
+
+```csharp
+public class SongNotFoundExceptionFilter : ExceptionFilterAttribute
+{
+    public override void OnException(ExceptionContext context)
+    {
+        if (context.Exception is SongNotFoundException)
+        {
+            var result = new ObjectResult(context.Exception.Message)
+            {
+                StatusCode = 404
+            };
+
+            context.Result = result;
+            context.ExceptionHandled = true;
+        }
+
+        base.OnException(context);
+    }
+}
+```
+
+Acest cod definesc o clasă denumită `SongNotFoundExceptionFilter` care moștenește clasa `ExceptionFilterAttribute`, utilizată în framework-ul ASP.NET pentru a manipula excepțiile.
+
+În metoda suprascrisă `OnException`, se verifică dacă excepția aruncată este de tipul `SongNotFoundException` prin intermediul construcției `if (context.Exception is SongNotFoundException)`. Dacă condiția este îndeplinită, se creează un nou obiect `ObjectResult`, care conține mesajul de eroare al excepției, și se atribuie codul de stare HTTP 404 (`StatusCode = 404`).
+
+Apoi, se setează rezultatul obținut ca rezultat al contextului excepției prin intermediul proprietății `context.Result`. De asemenea, se marchează excepția ca fiind tratată prin setarea proprietății `context.ExceptionHandled` la `true`.
+
+La final, se apelează metoda `OnException` a clasei de bază (`base.OnException(context)`) pentru a menține comportamentul implicit al gestionării excepțiilor.
+
+Astfel, prin utilizarea acestui filtru în cadrul unei aplicații ASP.NET, se poate intercepta excepția `SongNotFoundException` și se poate returna un răspuns HTTP cu codul de stare 404 și mesajul de eroare asociat.
 
 
 
