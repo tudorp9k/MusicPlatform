@@ -43,7 +43,7 @@ namespace MusicPlatform.Business.Services
             return Mapper.MapToFullAlbumDTO(album);
         }
 
-        public DetailAlbumDTO AddAlbum(DetailAlbumDTO payload)
+        public DetailAlbumDTO AddAlbum(DetailAlbumDTO payload, int artistId)
         {
             if (payload == null)
             {
@@ -59,7 +59,59 @@ namespace MusicPlatform.Business.Services
             unitOfWork.Albums.Insert(album);
             unitOfWork.SaveChanges();
 
+            AddArtistToAlbum(artistId, album.Id);
+
             return Mapper.MapToDetailAlbumDTO(album);
+        }
+
+        public bool AddSongToAlbum(int songId, int albumId)
+        {
+            var song = unitOfWork.Songs.GetById(songId);
+            var album = unitOfWork.Albums.GetById(albumId);
+
+            if (song == null)
+            {
+                throw new SongNotFoundException();
+            }
+
+            if (album == null)
+            {
+                throw new AlbumNotFoundException();
+            }
+
+            song.AlbumId = albumId;
+            song.Album = album;
+
+            album.Songs.Add(song);
+
+            unitOfWork.Songs.Update(song);
+            unitOfWork.SaveChanges();
+
+            return true;
+        }
+
+        public bool AddArtistToAlbum(int artistId, int albumId)
+        {
+            var artist = unitOfWork.Artists.GetById(artistId);
+            var album = unitOfWork.Albums.GetById(albumId);
+
+            if (artist == null)
+            {
+                throw new ArtistNotFoundException();
+            }
+
+            if (album == null)
+            {
+                throw new AlbumNotFoundException();
+            }
+
+            album.ArtistId = artistId;
+            album.Artist = artist;
+
+            unitOfWork.Albums.Update(album);
+            unitOfWork.SaveChanges();
+
+            return true;
         }
 
         public bool UpdateAlbum(UpdateAlbumDTO payload)

@@ -50,7 +50,8 @@ namespace MusicPlatform.Business
                 Name = album.Name,
                 ReleaseDate = album.ReleaseDate.ToString(),
                 ArtistName = album.Artist.Name,
-                Songs = album.Songs.Select(s => MapToSongDTO(s)).ToList()
+                Songs = album.Songs.Select(s => MapToSongDTO(s)).ToList(),
+                ArtistId = album.ArtistId
             };
         }
     }

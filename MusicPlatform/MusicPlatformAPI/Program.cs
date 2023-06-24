@@ -41,6 +41,7 @@ builder.Services.AddControllers(options =>
 {
     options.Filters.Add(new ArtistNotFoundExceptionFilter());
     options.Filters.Add(new SongNotFoundExceptionFilter());
+    options.Filters.Add(new AlbumNotFoundExceptionFilter());
 });
 
 builder.Services.AddDbContext<MusicDbContext>();
@@ -50,10 +51,15 @@ builder.Services.AddScoped<AuthorizationService>();
 builder.Services.AddScoped<AuthenticationService>();
 builder.Services.AddScoped<ArtistService>();
 builder.Services.AddScoped<SongService>();
+builder.Services.AddScoped<AlbumService>();
 
 builder.Services.AddScoped<UserRepository>();
 builder.Services.AddScoped<ArtistRepository>();
 builder.Services.AddScoped<SongRepository>();
+builder.Services.AddScoped<SingleRepository>();
+builder.Services.AddScoped<AlbumRepository>();
+builder.Services.AddScoped<PlaylistRepository>();
+builder.Services.AddScoped<EPRepository>();
 
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();
