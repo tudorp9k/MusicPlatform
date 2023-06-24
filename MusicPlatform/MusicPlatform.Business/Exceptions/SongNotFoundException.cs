@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace MusicPlatform.Business.Exceptions
 {
-    public class SongNotFoundException : Exception
+    public class SongNotFoundException : ApplicationException
     {
         private static string defaultMessage = "Song not found.";
         public SongNotFoundException() : base(defaultMessage) { }

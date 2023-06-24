@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace MusicPlatform.Business.Exceptions
 {
-    public class ArtistNotFoundException : Exception
+    public class ArtistNotFoundException : ApplicationException
     {
         private static string defaultMessage = "Artist not found.";
         public ArtistNotFoundException() : base(defaultMessage) { }

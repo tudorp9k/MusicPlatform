@@ -33,5 +33,25 @@ namespace MusicPlatform.Business
                 ArtistId = song.ArtistId
             };
         }
+
+        public static DetailAlbumDTO MapToDetailAlbumDTO(Album album)
+        {
+            return new DetailAlbumDTO
+            {
+                Name = album.Name,
+                ReleaseDate = album.ReleaseDate.ToString()
+            };
+        }
+
+        public static FullAlbumDTO MapToFullAlbumDTO(Album album)
+        {
+            return new FullAlbumDTO
+            {
+                Name = album.Name,
+                ReleaseDate = album.ReleaseDate.ToString(),
+                ArtistName = album.Artist.Name,
+                Songs = album.Songs.Select(s => MapToSongDTO(s)).ToList()
+            };
+        }
     }
 }
