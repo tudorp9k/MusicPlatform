@@ -44,6 +44,7 @@ builder.Services.AddControllers(options =>
     options.Filters.Add(new AlbumNotFoundExceptionFilter());
     options.Filters.Add(new SingleNotFoundExceptionFilter());
     options.Filters.Add(new PlaylistNotFoundExceptionFilter());
+    options.Filters.Add(new EpNotFoundExceptionFilter());
 });
 
 builder.Services.AddDbContext<MusicDbContext>();

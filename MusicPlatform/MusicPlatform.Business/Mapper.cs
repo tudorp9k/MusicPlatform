@@ -80,10 +80,19 @@ namespace MusicPlatform.Business
         {
             return new PlaylistDTO
             {
-                Id = playlist.Id,
                 Name = playlist.Name,
                 Description = playlist.Description,
                 UserId = playlist.UserId
+            };
+        }
+
+        public static EpDto MapToEpDTO(EP ep)
+        {
+            return new EpDto
+            {
+                Name = ep.Name,
+                ReleaseDate = ep.ReleaseDate.ToString(),
+                ArtistId = ep.ArtistId
             };
         }
     }
