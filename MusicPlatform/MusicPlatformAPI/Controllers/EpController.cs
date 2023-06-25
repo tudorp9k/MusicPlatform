@@ -2,6 +2,7 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using MusicPlatform.Business.Dtos;
 using MusicPlatform.Business.Services;
+using MusicPlatform.DataLayer.Models;
 using System.Data;
 
 namespace MusicPlatformAPI.Controllers
@@ -53,6 +54,15 @@ namespace MusicPlatformAPI.Controllers
         [Authorize(Roles = "Admin,Artist")]
         public IActionResult AddSong(int songId, int epId)
         {
+            var userId = User.FindFirst("userId")?.Value;
+
+            var ep = epService.GetById(epId);
+
+            if (ep.ArtistId.ToString() != userId)
+            {
+                return Forbid();
+            }
+
             var result = epService.AddSongToEP(songId, epId);
 
             if (!result)
@@ -67,6 +77,13 @@ namespace MusicPlatformAPI.Controllers
         [Authorize(Roles = "Admin,Artist")]
         public IActionResult Edit(UpdateEpDto epUpdate)
         {
+            var userId = User.FindFirst("userId")?.Value;
+
+            if (epUpdate.ArtistId.ToString() != userId)
+            {
+                return Forbid();
+            }
+
             var result = epService.UpdateEP(epUpdate);
 
             if (!result)
@@ -81,6 +98,15 @@ namespace MusicPlatformAPI.Controllers
         [Authorize(Roles = "Admin,Artist")]
         public IActionResult Delete(int epId)
         {
+            var userId = User.FindFirst("userId")?.Value;
+
+            var ep = epService.GetById(epId);
+
+            if (ep.ArtistId.ToString() != userId)
+            {
+                return Forbid();
+            }
+
             var result = epService.DeleteEP(epId);
 
             if (!result)

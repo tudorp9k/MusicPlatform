@@ -4,6 +4,7 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using MusicPlatform.Business.Dtos;
 using MusicPlatform.Business.Services;
+using static Microsoft.EntityFrameworkCore.DbLoggerCategory;
 
 namespace MusicPlatformAPI.Controllers
 {
@@ -54,6 +55,15 @@ namespace MusicPlatformAPI.Controllers
         [Authorize(Roles = "Admin,Artist")]
         public IActionResult AddSong(int songId, int playlistId)
         {
+            var userId = User.FindFirst("userId")?.Value;
+
+            var playlist = playlistService.GetById(playlistId);
+
+            if (playlist.UserId.ToString() != userId)
+            {
+                return Forbid();
+            }
+
             var result = playlistService.AddSongToPlaylist(songId, playlistId);
 
             if (!result)
@@ -68,6 +78,13 @@ namespace MusicPlatformAPI.Controllers
         [Authorize(Roles = "Admin,Artist")]
         public IActionResult Edit(UpdatePlaylistDTO playlistUpdate)
         {
+            var userId = User.FindFirst("userId")?.Value;
+
+            if (playlistUpdate.UserId.ToString() != userId)
+            {
+                return Forbid();
+            }
+
             var result = playlistService.UpdatePlaylist(playlistUpdate);
 
             if (!result)
@@ -82,6 +99,15 @@ namespace MusicPlatformAPI.Controllers
         [Authorize(Roles = "Admin,Artist")]
         public IActionResult Delete(int playlistId)
         {
+            var userId = User.FindFirst("userId")?.Value;
+
+            var playlist = playlistService.GetById(playlistId);
+
+            if (playlist.UserId.ToString() != userId)
+            {
+                return Forbid();
+            }
+
             var result = playlistService.DeletePlaylist(playlistId);
 
             if (!result)
