@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace MusicPlatform.Business.Dtos
 {
-    public class PlaylistDTO
+    public class FullPlaylistDTO
     {
         public string Name { get; set; }
         public string Description { get; set; }

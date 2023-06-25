@@ -60,9 +60,12 @@ namespace MusicPlatformAPI.Controllers
         {
             var userId = User.FindFirst("userId")?.Value;
 
-            if (single.ArtistId.ToString() != userId)
+            if (!User.IsInRole("Admin"))
             {
-                return Forbid();
+                if (single.ArtistId.ToString() != userId)
+                {
+                    return Forbid();
+                }
             }
 
             var result = singleService.UpdateSingle(single);
@@ -82,9 +85,12 @@ namespace MusicPlatformAPI.Controllers
 
             var single = singleService.GetById(singleId);
 
-            if (single.ArtistId.ToString() != userId)
+            if (!User.IsInRole("Admin"))
             {
-                return Forbid();
+                if (single.ArtistId.ToString() != userId)
+                {
+                    return Forbid();
+                }
             }
 
             var result = singleService.DeleteSingle(singleId);

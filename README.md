@@ -60,7 +60,11 @@ Prin intermediul API-ului, utilizatorii pot face diferite tipuri de request-uri 
 
 Prin intermediul acestor request-uri și a funcționalităților backend-ului, artistii pot adăuga, actualiza și șterge melodiile, pot crea și administra albume și playlist-uri, pot interacționa cu fanii și pot beneficia de funcționalități specifice precum statistici despre audiență, gestionarea drepturilor de autor și multe altele. Backend-ul oferă o interfață eficientă și sigură pentru ca artiștii să-și gestioneze conținutul și să interacționeze cu utilizatorii pe platforma Music Platform.
 
+<<<<<<< HEAD
 ![image1](e7adeb363e901dd4889b34519956c970.png)
+=======
+![alt text](.\e7adeb363e901dd4889b34519956c970.png)
+>>>>>>> 3c6546f2dd1ac5a174710bd7be63646e83840788
 
 
 
@@ -84,7 +88,11 @@ Navigarea în cadrul platformei Music Platform este gestionată prin intermediul
 
 În concluzie, arhitectura platformei Music Platform, bazată pe design pattern-ul Repository - Service - Controller și împărțită în trei niveluri (Data Logic, Business Logic și API), permite o dezvoltare modulară, scalabilă și ușor de întreținut. Prin separarea logică a componentelor și utilizarea tehnologiilor precum SQL Server, ASP.NET și C#, se asigură o gestionare eficientă a datelor, o logica de afaceri coerentă și o interfață prietenoasă pentru utilizatori.
 
+<<<<<<< HEAD
 ![image2](74abc51db99c0460a5d78a1d3cffcacb.png)
+=======
+![alt text](.\74abc51db99c0460a5d78a1d3cffcacb.png)
+>>>>>>> 3c6546f2dd1ac5a174710bd7be63646e83840788
 
 
 

@@ -76,9 +76,18 @@ namespace MusicPlatform.Business
             };
         }
 
-        public static PlaylistDTO MapToPlaylistDTO(Playlist playlist)
+        public static DetailPlaylistDTO MapToDetailPlaylistDTO(Playlist playlist)
         {
-            return new PlaylistDTO
+            return new DetailPlaylistDTO
+            {
+                Name = playlist.Name,
+                Description = playlist.Description,
+            };
+        }
+
+        public static FullPlaylistDTO MapToFullPlaylistDTO(Playlist playlist)
+        {
+            return new FullPlaylistDTO
             {
                 Name = playlist.Name,
                 Description = playlist.Description,
@@ -88,9 +97,18 @@ namespace MusicPlatform.Business
             };
         }
 
-        public static EpDto MapToEpDTO(EP ep)
+        public static DetailEPDto MapToDetailEpDTO(EP ep)
         {
-            return new EpDto
+            return new DetailEPDto
+            {
+                Name = ep.Name,
+                ReleaseDate = ep.ReleaseDate.ToString(),
+            };
+        }
+
+        public static FullEpDto MapToFullEpDTO(EP ep)
+        {
+            return new FullEpDto
             {
                 Name = ep.Name,
                 ReleaseDate = ep.ReleaseDate.ToString(),

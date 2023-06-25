@@ -58,9 +58,12 @@ namespace MusicPlatformAPI.Controllers
 
             var album = albumService.GetById(albumId);
 
-            if (album.ArtistId.ToString() != userId)
+            if (!User.IsInRole("Admin"))
             {
-                return Forbid();
+                if (album.ArtistId.ToString() != userId)
+                {
+                    return Forbid();
+                }
             }
 
             var result = albumService.AddSongToAlbum(songId, albumId);
@@ -79,9 +82,12 @@ namespace MusicPlatformAPI.Controllers
         {
             var userId = User.FindFirst("userId")?.Value;
 
-            if (albumUpdate.ArtistId.ToString() != userId)
+            if (!User.IsInRole("Admin"))
             {
-                return Forbid();
+                if (albumUpdate.Id.ToString() != userId)
+                {
+                    return Forbid();
+                }
             }
 
             var result = albumService.UpdateAlbum(albumUpdate);
@@ -102,9 +108,12 @@ namespace MusicPlatformAPI.Controllers
 
             var album = albumService.GetById(albumId);
 
-            if (album.ArtistId.ToString() != userId)
+            if (!User.IsInRole("Admin"))
             {
-                return Forbid();
+                if (album.ArtistId.ToString() != userId)
+                {
+                    return Forbid();
+                }
             }
 
             var result = albumService.DeleteAlbum(albumId);

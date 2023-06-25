@@ -20,7 +20,7 @@ namespace MusicPlatformAPI.Controllers
 
         [HttpGet("get-all")]
         [AllowAnonymous]
-        public ActionResult<List<EpDto>> GetAll()
+        public ActionResult<List<DetailEPDto>> GetAll()
         {
             var eps = epService.GetAll();
 
@@ -29,7 +29,7 @@ namespace MusicPlatformAPI.Controllers
 
         [HttpGet("get/{epId}")]
         [AllowAnonymous]
-        public ActionResult<EpDto> Get(int epId)
+        public ActionResult<FullEpDto> Get(int epId)
         {
             var ep = epService.GetById(epId);
 
@@ -38,8 +38,18 @@ namespace MusicPlatformAPI.Controllers
 
         [HttpPost("add")]
         [Authorize(Roles = "Admin,Artist")]
-        public IActionResult Add(EpDto ep, int artistId)
+        public IActionResult Add(DetailEPDto ep, int artistId)
         {
+            var userId = User.FindFirst("userId")?.Value;
+
+            if (!User.IsInRole("Admin"))
+            {
+                if (artistId.ToString() != userId)
+                {
+                    return Forbid();
+                }
+            }
+
             var result = epService.AddEP(ep, artistId);
 
             if (result == null)
@@ -58,9 +68,12 @@ namespace MusicPlatformAPI.Controllers
 
             var ep = epService.GetById(epId);
 
-            if (ep.ArtistId.ToString() != userId)
+            if (!User.IsInRole("Admin"))
             {
-                return Forbid();
+                if (ep.ArtistId.ToString() != userId)
+                {
+                    return Forbid();
+                }
             }
 
             var result = epService.AddSongToEP(songId, epId);
@@ -79,9 +92,12 @@ namespace MusicPlatformAPI.Controllers
         {
             var userId = User.FindFirst("userId")?.Value;
 
-            if (epUpdate.ArtistId.ToString() != userId)
+            if (!User.IsInRole("Admin"))
             {
-                return Forbid();
+                if (epUpdate.ArtistId.ToString() != userId)
+                {
+                    return Forbid();
+                }
             }
 
             var result = epService.UpdateEP(epUpdate);
@@ -102,9 +118,12 @@ namespace MusicPlatformAPI.Controllers
 
             var ep = epService.GetById(epId);
 
-            if (ep.ArtistId.ToString() != userId)
+            if (!User.IsInRole("Admin"))
             {
-                return Forbid();
+                if (ep.ArtistId.ToString() != userId)
+                {
+                    return Forbid();
+                }
             }
 
             var result = epService.DeleteEP(epId);

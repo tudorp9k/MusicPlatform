@@ -19,7 +19,7 @@ namespace MusicPlatform.Business.Services
             this.unitOfWork = unitOfWork ?? throw new ArgumentNullException(nameof(unitOfWork));
         }
 
-        public List<EpDto> GetAll()
+        public List<DetailEPDto> GetAll()
         {
             var eps = unitOfWork.EPs.GetAll();
 
@@ -28,10 +28,10 @@ namespace MusicPlatform.Business.Services
                 throw new EpNotFoundException();
             }
 
-            return eps.Select(e => Mapper.MapToEpDTO(e)).ToList();
+            return eps.Select(e => Mapper.MapToDetailEpDTO(e)).ToList();
         }
 
-        public EpDto GetById(int epId)
+        public FullEpDto GetById(int epId)
         {
             var ep = unitOfWork.EPs.GetByIdWithArtistAndSongs(epId);
 
@@ -40,10 +40,10 @@ namespace MusicPlatform.Business.Services
                 throw new EpNotFoundException();
             }
 
-            return Mapper.MapToEpDTO(ep);
+            return Mapper.MapToFullEpDTO(ep);
         }
 
-        public EpDto AddEP(EpDto payload, int artistId)
+        public DetailEPDto AddEP(DetailEPDto payload, int artistId)
         {
             if (payload == null)
             {
@@ -68,7 +68,7 @@ namespace MusicPlatform.Business.Services
             unitOfWork.EPs.Insert(ep);
             unitOfWork.SaveChanges();
 
-            return Mapper.MapToEpDTO(ep);
+            return Mapper.MapToDetailEpDTO(ep);
         }
 
         public bool AddSongToEP(int songId, int epId)
