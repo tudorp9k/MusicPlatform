@@ -2,7 +2,7 @@
 
 #                                Music Platform 
 
-
+Link: https://github.com/tudorp9k/MusicPlatform.git
 
 ​                                                                                                                                                                Studenti:
 
@@ -52,7 +52,7 @@ Prin intermediul API-ului, utilizatorii pot face diferite tipuri de request-uri 
 
 2. POST request: Acest tip de request este utilizat pentru a crea noi înregistrări în baza de date. De exemplu, un POST request către ruta /songs poate fi folosit pentru a adăuga o nouă melodie în sistem, specificând detaliile acesteia, cum ar fi numele, artistul și albumul asociat.
 
-3. PUT request: Acest tip de request este utilizat pentru a actualiza înregistrări existente în baza de date. De exemplu, un PUT request către ruta /songs/{id} poate fi folosit pentru a actualiza detaliile unei melodii existente, identificate prin ID-ul său.
+3. PATCH request: Acest tip de request este utilizat pentru a actualiza parțial o resursă existentă în baza de date. Spre deosebire de PUT request, care înlocuiește întreaga resursă, PATCH request permite actualizarea selectivă a anumitor câmpuri ale resursei fără a afecta restul datelor. Acest lucru se realizează prin trimiterea unui set de instrucțiuni sau operații care descriu modificările dorite.
 
 4. DELETE request: Acest tip de request este utilizat pentru a șterge înregistrări din baza de date. De exemplu, un DELETE request către ruta /songs/{id} poate fi folosit pentru a șterge o melodie existentă din sistem, identificată prin ID-ul său.
 
@@ -60,7 +60,7 @@ Prin intermediul API-ului, utilizatorii pot face diferite tipuri de request-uri 
 
 Prin intermediul acestor request-uri și a funcționalităților backend-ului, artistii pot adăuga, actualiza și șterge melodiile, pot crea și administra albume și playlist-uri, pot interacționa cu fanii și pot beneficia de funcționalități specifice precum statistici despre audiență, gestionarea drepturilor de autor și multe altele. Backend-ul oferă o interfață eficientă și sigură pentru ca artiștii să-și gestioneze conținutul și să interacționeze cu utilizatorii pe platforma Music Platform.
 
-![alt text](C:\Users\codru.LAPTOP-F7RR2UR3\Documents\MusicPlatformDAWM\MusicPlatform\e7adeb363e901dd4889b34519956c970.png)
+![image1](e7adeb363e901dd4889b34519956c970.png)
 
 
 
@@ -84,7 +84,7 @@ Navigarea în cadrul platformei Music Platform este gestionată prin intermediul
 
 În concluzie, arhitectura platformei Music Platform, bazată pe design pattern-ul Repository - Service - Controller și împărțită în trei niveluri (Data Logic, Business Logic și API), permite o dezvoltare modulară, scalabilă și ușor de întreținut. Prin separarea logică a componentelor și utilizarea tehnologiilor precum SQL Server, ASP.NET și C#, se asigură o gestionare eficientă a datelor, o logica de afaceri coerentă și o interfață prietenoasă pentru utilizatori.
 
-![alt text](C:\Users\codru.LAPTOP-F7RR2UR3\Documents\MusicPlatformDAWM\MusicPlatform\74abc51db99c0460a5d78a1d3cffcacb.png)
+![image2](74abc51db99c0460a5d78a1d3cffcacb.png)
 
 
 
