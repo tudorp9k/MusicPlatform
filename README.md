@@ -1,260 +1,141 @@
-# Documentație pentru proiectul  "Music Platform"
+#                        Documentația proiectului 
 
-Proiectul "Music Platform" este o aplicație dezvoltată în limbajul C# care oferă o platformă interactivă pentru ascultarea și descoperirea de muzică. Scopul acestui proiect este de a crea un mediu prietenos și accesibil pentru utilizatori, unde aceștia pot explora și asculta diverse genuri muzicale, să descopere artiști noi și să interacționeze cu comunitatea muzicală.
+#                                Music Platform 
 
 
 
-## Capitolul 1: Arhitectura bazei de date
+​                                                                                                                                                                Studenti:
 
-Baza de date pentru platforma muzicală va fi compusă din următoarele tabele:
+​                                                                                                                                                                Popa Tudor - Grupa 10LF213
 
-a) Tabela "Users" - va conține informații despre utilizatori și câmpurile sale:
+​                                                                                                                                                                Pavel Codrut - Grupa 10LF212
 
-   - Id (cheie primară, tip: int) - identificator unic pentru fiecare utilizator
-   - Username (tip: varchar) - numele utilizatorului
-   - PasswordHash (tip: varchar) - valoarea hash a parolei utilizatorului
-   - Role (tip: varchar) - rolul utilizatorului (ex: "admin", "user")
 
-b) Tabela "Songs" - va conține informații despre cântece și câmpurile sale:
 
-   - Id (cheie primară, tip: int) - identificator unic pentru fiecare cântec
-   - Name (tip: varchar) - numele cântecului
-   - Genre (tip: enum) - genul muzical al cântecului
-   - Likes (tip: int) - numărul de aprecieri pentru cântec
-   - Streams (tip: int) - numărul de ascultări pentru cântec
-   - ArtistId (tip: int) - identificatorul artistului asociat acestui cântec (cheie externă către tabela "Artists")
 
-c) Tabela "Artists" - va conține informații despre artiști și câmpurile sale:
 
-   - Id (cheie primară, tip: int) - identificator unic pentru fiecare artist
+## Prezentarea proiectului, ce isi propune, ce probleme rezolva
 
-   - Name (tip: varchar) - numele artistului
+Music Platform este o platformă online inovatoare care oferă utilizatorilor acces la o bibliotecă extinsă de melodii și funcționalități personalizate pentru a se bucura de muzică într-un mod unic și interactiv. Această platformă are drept scop să rezolve problemele și să îndeplinească nevoile pasionaților de muzică, oferindu-le o experiență completă și captivantă în domeniul muzical.
 
-   - Description (tip: varchar) - descrierea artistului
+Music Platform pune accent pe interactivitate și personalizare. Utilizatorii pot crea liste de redare personalizate, pot marca melodiile favorite, pot urmări artiști și pot primi actualizări despre noile lansări și evenimente ale acestora. Prin intermediul funcției de statistici de ascultare, utilizatorii pot obține informații detaliate despre preferințele lor muzicale, numărul de redări și poate chiar să descopere statistici interesante despre artistul lor preferat.
 
-   - Genre (tip: enum) - genul muzical al artistului
+Music Platform oferă, de asemenea, o comunitate vibrantă și interacțiune socială. Utilizatorii pot interacționa cu alți iubitori de muzică prin partajarea listelor de redare. Aceasta creează un spațiu pentru descoperire și conectare între oameni cu gusturi muzicale similare și deschide porți către noi prietenii și colaborări în industria muzicală.
 
-Legătura între tabele:
+Music Platform reprezintă un instrument esențial pentru artiști, oferindu-le posibilitatea de a-și crește expunerea și de a construi conexiuni autentice cu fanii lor. Este un ecosistem digital care pune în prim-plan talentele și pasiunea artiștilor, deschizând noi uși către succesul în industria muzicală contemporană.
 
-- Tabela "Artists" și "Songs" au o relație de tip one-to-many, unde un artist poate avea mai multe cântece asociate.
+Prin integrarea tuturor acestor caracteristici, Music Platform rezolvă problemele de accesibilitate și descoperire în lumea muzicii, oferind utilizatorilor o experiență completă și satisfăcătoare. Indiferent dacă sunt în căutarea noilor lor artisti preferati sau doresc să exploreze și să descopere genuri muzicale noi, Music Platform îi încurajează pe utilizatori să-și exprime pasiunea pentru muzică și să-și creeze propria lor experiență muzicală captivantă.
 
-Constrângerile la ștergere:
 
-- Dacă un artist este șters din tabela "Artists", toate cântecele asociate acestuia din tabela "Songs" vor fi șterse în mod automat (constrângere de tip "CASCADE").
 
-- Migrarea este definită prin clasa `Updated_DB_Schema` care moștenește clasa `Migration` din namespace-ul `Microsoft.EntityFrameworkCore.Migrations`. Aceasta conține două metode suprascrise: `Up` și `Down`.
 
-  Metoda `Up` este responsabilă pentru efectuarea modificărilor în baza de date atunci când migrarea este aplicată. În acest caz, metoda adaugă patru coloane noi în tabela "Songs" și creează patru tabele noi: "Album", "EP", "Playlist" și "Single". De asemenea, se definesc chei primare și constrângeri de cheie externă pentru aceste tabele folosind metodele disponibile în clasa `MigrationBuilder`.
 
-  Metoda `Down` este responsabilă pentru revenirea modificărilor făcute în metoda `Up` în cazul în care migrarea este anulată sau revertată. În acest caz, se elimină coloanele și tabelele create în metoda `Up`.
+## Tehnologiile utilizate
 
-  Astfel, această migrare adaugă coloane noi în tabela "Songs" și creează patru tabele noi în baza de date, reprezentând entități precum albume, EP-uri, playlist-uri și single-uri. De asemenea, sunt definite relațiile dintre aceste entități și tabela "Songs" prin intermediul constrângerilor de cheie externă (foreign key constraints). Aceste modificări au rolul de a actualiza schema bazei de date pentru a reflecta aceste entități și relații în cadrul aplicației.
+- EntityFrameworkCore: Această tehnologie este o parte integrantă a framework-ului .NET Core și este utilizată pentru gestionarea și interacțiunea cu baza de date. Prin intermediul bibliotecii Entity Framework Core, sunt create și gestionate migrăriile bazei de date, permitând actualizări ale schemei și manipularea datelor. Utilizarea migrărilor în cadrul proiectului permite gestionarea versiunilor bazei de date și aplicarea modificărilor în mod corespunzător. Migrările sunt utilizate pentru a adăuga, actualiza sau șterge tabele, coloane și constrângeri din schema bazei de date. Prin intermediul bibliotecii Entity Framework Core, este realizat un mapping între modelele obiect-entitate și structura tabelelor din baza de date. Aceasta facilitează interacțiunea cu baza de date prin intermediul obiectelor și metodelor specifice. Sunt utilizate constrângerile de chei străine pentru a asigura integritatea referențială între tabelele bazei de date. Aceste constrângeri permit asocierea corespunzătoare între entități și facilitează navigarea între ele.
 
-Tipurile de date alese pentru fiecare câmp al tabelelor:
+- SQL Server: Baza de date utilizată în cadrul proiectului este SQL Server, un sistem de gestionare a bazelor de date relaționale. Acesta oferă funcționalități puternice pentru stocarea și manipularea datelor muzicale, asigurând performanță și scalabilitate. Acesta este utilizat în proiectul Music Platform pentru a stoca și gestiona datele referitoare la artiști, albume, melodii, playlist-uri și alte informații relevante pentru platformă. Prin utilizarea SQL Server se asigură o gestionare eficientă a datelor și securitate avansată, contribuind la o experiență de utilizare optimă pentru artiști și utilizatori ai platformei.
 
-- Id, ArtistId vor fi de tip întreg (int)
-
-- Username, PasswordHash, Name, Description vor fi de tip text (varchar)
-
-- Genre va fi de tip enum, reprezentând genul muzical (ex: Rock, Pop, Jazz)
+- ASP.NET: Au fost create endpoint-uri API care permit comunicarea și schimbul de date între client și server. API-ul oferă funcționalități diverse pentru a sprijini operațiuni precum înregistrarea și autentificarea utilizatorilor, gestionarea profilurilor și interacțiunea cu resursele muzicale. ASP.NET utilizează un sistem de rute flexibil, care permite definirea și gestionarea rutelor URL pentru fiecare endpoint al API-ului. Acest lucru facilitează accesul și navigarea către diferitele funcționalități și resurse ale platformei. API-ul este structurat în jurul conceptului de controlere, care gestionează cererile primite de la client și returnează răspunsurile corespunzătoare. Controlerele ASP.NET oferă metode și acțiuni pentru a procesa cererile HTTP și pentru a interacționa cu serviciile și baza de date.
 
   
 
-  ![alt text](74abc51db99c0460a5d78a1d3cffcacb.png)
-
   
 
-  ![image](1b4009141607b785ea82b4859f05e49b.png)
+## Backend, Request-uri folosite
 
-  
+Una dintre componentele cheie ale backend-ului este API-ul (Application Programming Interface), care permite comunicarea între frontend (interfața utilizator) și backend (serverul). API-ul este construit folosind framework-ul ASP.NET, care oferă un mediu robust pentru dezvoltarea aplicațiilor web. 
 
-## Capitolul 2: Implementarea autentificării și autorizării
+Prin intermediul API-ului, utilizatorii pot face diferite tipuri de request-uri către server pentru a accesa și manipula datele de pe platformă. Iată câteva tipuri de request-uri folosite în Music Platform:
 
-Pentru implementarea autentificării și autorizării în cadrul proiectului "Music Platform" s-au creat clasele `AuthorizationService` și `AuthenticationService` cu funcționalități specifice.
+1. GET request: Acest tip de request este utilizat pentru a obține informații despre artisti, albume, melodii, playlist-uri sau alte entități de pe platformă. De exemplu, un GET request către ruta /artists poate returna o listă cu toți artiștii înregistrați în sistem.
 
-Clasa `AuthorizationService` este responsabilă de generarea și validarea token-urilor JWT (JSON Web Token). Aceasta utilizează o cheie de securitate (`_securityKey`) pentru generarea semnăturii token-urilor. Metodele principale ale clasei includ:
+2. POST request: Acest tip de request este utilizat pentru a crea noi înregistrări în baza de date. De exemplu, un POST request către ruta /songs poate fi folosit pentru a adăuga o nouă melodie în sistem, specificând detaliile acesteia, cum ar fi numele, artistul și albumul asociat.
 
-- `GetToken(User user)`: Această metodă primește un obiect de tip `User` și generează un token JWT. Token-ul conține informații despre rolul utilizatorului, ID-ul utilizatorului și numele de utilizator. Token-ul este semnat cu ajutorul cheii de securitate și are o perioadă de valabilitate de 1 an.
+3. PUT request: Acest tip de request este utilizat pentru a actualiza înregistrări existente în baza de date. De exemplu, un PUT request către ruta /songs/{id} poate fi folosit pentru a actualiza detaliile unei melodii existente, identificate prin ID-ul său.
 
-- `ValidateToken(string tokenString)`: Această metodă primește un șir de caractere reprezentând un token JWT și verifică validitatea acestuia. Metoda validează semnătura token-ului și asigură că token-ul nu a expirat.
+4. DELETE request: Acest tip de request este utilizat pentru a șterge înregistrări din baza de date. De exemplu, un DELETE request către ruta /songs/{id} poate fi folosit pentru a șterge o melodie existentă din sistem, identificată prin ID-ul său.
 
-- `HashPassword(string password)`: Această metodă primește o parolă în clar și returnează valoarea hash a parolei. Metoda utilizează un algoritm PBKDF2 pentru a genera un hash securizat al parolei.
+În plus, backend-ul Music Platform utilizează diverse biblioteci și componente C# pentru a gestiona autentificarea utilizatorilor, validarea datelor, gestionarea erorilor și multe altele. De exemplu, se poate folosi biblioteca Entity Framework pentru a realiza maparea obiect-relațională (ORM) și pentru a interacționa cu baza de date SQL Server.
 
-- `VerifyHashedPassword(string hashedPassword, string password)`: Această metodă primește un hash al parolei și o parolă în clar și verifică dacă parola în clar se potrivește cu hash-ul stocat.
+Prin intermediul acestor request-uri și a funcționalităților backend-ului, artistii pot adăuga, actualiza și șterge melodiile, pot crea și administra albume și playlist-uri, pot interacționa cu fanii și pot beneficia de funcționalități specifice precum statistici despre audiență, gestionarea drepturilor de autor și multe altele. Backend-ul oferă o interfață eficientă și sigură pentru ca artiștii să-și gestioneze conținutul și să interacționeze cu utilizatorii pe platforma Music Platform.
 
-  
+![alt text](C:\Users\codru.LAPTOP-F7RR2UR3\Documents\MusicPlatformDAWM\MusicPlatform\e7adeb363e901dd4889b34519956c970.png)
 
-Clasa `AuthenticationService` utilizează serviciul `AuthorizationService` pentru a implementa funcționalitatea de înregistrare a utilizatorilor și artiștilor în aplicație. Metodele principale ale clasei includ:
 
-- `Register(UserDto registerData)`: Această metodă primește datele de înregistrare ale unui utilizator și înregistrează un nou utilizator în baza de date. Parola utilizatorului este hash-uită folosind serviciul `AuthorizationService` înainte de a fi salvată.
 
-- `Register(ArtistDto registerData)`: Această metodă primește datele de înregistrare ale unui artist și înregistrează un nou artist în baza de date. Parola artistului este hash-uită folosind serviciul `AuthorizationService` înainte de a fi salvată.
 
-- `Validate(UserDto payload)`: Această metodă primește datele de autentificare ale unui utilizator și verifică validitatea acestora. Metoda verifică dacă utilizatorul este un artist sau un utilizator obișnuit și apoi validează parola. Dacă datele sunt valide, metoda returnează un token JWT generat folosind serviciul `AuthorizationService`.
 
-  
+## Arhitectura
 
-Aceste clase și metodele asociate sunt utilizate în implementarea funcționalității de autentificare și autorizare în cadrul aplicației "Music Platform". Detaliile specifice și utilizarea acestor clase și metode vor depinde de arhitectura și fluxul de lucru al aplicației.
+Arhitectura platformei Music Platform a fost concepută cu atenție pentru a asigura o separare clară între diferitele componente și a facilita scalabilitatea, extensibilitatea și întreținerea sistemului. Arhitectura urmează un design pattern bazat pe conceptul de Repository - Service - Controller și este împărțită în trei niveluri principale: Data Logic, Business Logic și API.
 
+Nivelul de Data Logic reprezintă baza de date și interacțiunea cu aceasta. Pentru a gestiona operațiunile de bază, cum ar fi stocarea, actualizarea și interogarea datelor, este utilizată o bază de date relațională, cum ar fi SQL Server. În această arhitectură, se utilizează un design pattern numit Repository, care separă operațiunile specifice bazei de date de restul aplicației. Astfel, există clase de tip Repository care se ocupă de accesul la date și de executarea operațiunilor CRUD (Create, Read, Update, Delete) asupra acestora.
 
+Nivelul de Business Logic reprezintă logica de afaceri a platformei. Aici sunt implementate regulile de validare, procesele complexe și operațiunile specifice domeniului muzical. Acest nivel este responsabil pentru prelucrarea datelor, aplicarea logicii de afaceri și asigurarea coerenței și integrității datelor. În arhitectura Music Platform, nivelul de Business Logic este implementat utilizând servicii (Services). Serviciile reprezintă componente independente care se ocupă de logica de afaceri și interacționează cu nivelul de Data Logic prin intermediul repository-urilor. Ele encapsulează funcționalitățile specifice și expun metode prin care pot fi apelate și utilizate în alte părți ale aplicației.
 
-## Capitolul 3: Implementarea comunicării server-bază de date folosind ORM-ul Entity Framework Core
+Nivelul de API reprezintă interfața prin care utilizatorii interacționează cu platforma. Aici sunt definite rutele, controlerele și acțiunile care răspund la cererile utilizatorilor și furnizează datele sau execută operațiunile solicitate. Controlerele reprezintă punctele de intrare în aplicație și gestionează interacțiunea cu nivelul de Business Logic prin intermediul serviciilor. Ele preiau cererile HTTP, validează datele primite, apelează serviciile corespunzătoare și returnează răspunsurile către utilizatori. În arhitectura Music Platform, API-ul este construit folosind framework-ul ASP.NET și utilizează conceptul de routing pentru a direcționa cererile către controlerele corespunzătoare.
 
-Implementarea comunicării server-bază de date în cadrul proiectului "Music Platform" se realizează utilizând ORM-ul (Object-Relational Mapping) Entity Framework Core. Clasa `MusicDbContextModelSnapshot` din namespace-ul `MusicPlatform.DataLayer.Migrations` reprezintă o înregistrare a modelului bazei de date și descrie entitățile, proprietățile și relațiile dintre acestea.
+Această arhitectură împărțită în trei niveluri - Data Logic, Business Logic și API - oferă multiple beneficii. Separarea logică a funcționalităților permite dezvoltarea modulară și independentă a componentelor, facilitând testarea și întreținerea. De asemenea, permite scalabilitatea sistemului, deoarece fiecare nivel poate fi gestionat și dimensionat separat. Util
 
-Metoda `BuildModel(ModelBuilder modelBuilder)` este responsabilă de construirea modelului bazei de date utilizând obiectul `modelBuilder`. Aici sunt definite entitățile și proprietățile acestora, precum și constrângerile asociate. Mai jos este prezentată implementarea acestei metode, în conformitate cu structurile modelelor din proiect:
+izarea design pattern-ului Repository - Service - Controller asigură o structură clară și o organizare eficientă a codului, facilitând colaborarea între dezvoltatori și dezvoltarea ulterioară a platformei.
 
-```csharp
-modelBuilder.Entity("MusicPlatform.DataLayer.Models.Song", b =>
-{
-    b.Property<int>("Id")
-        .ValueGeneratedOnAdd()
-        .HasColumnType("int");
+Navigarea în cadrul platformei Music Platform este gestionată prin intermediul rutelor și acțiunilor definite în controlerele API-ului. Utilizatorii pot accesa diferite resurse, cum ar fi artiști, albume, melodii sau playlist-uri, prin intermediul cererilor HTTP și al parametrilor specifici. De exemplu, o cerere GET către ruta /artists poate returna o listă cu toți artiștii înregistrați, în timp ce o cerere GET către ruta /songs/{id} poate returna detaliile unei melodii specifice, identificate prin ID-ul său.
 
-    b.Property<int>("ArtistId")
-        .HasColumnType("int");
+În concluzie, arhitectura platformei Music Platform, bazată pe design pattern-ul Repository - Service - Controller și împărțită în trei niveluri (Data Logic, Business Logic și API), permite o dezvoltare modulară, scalabilă și ușor de întreținut. Prin separarea logică a componentelor și utilizarea tehnologiilor precum SQL Server, ASP.NET și C#, se asigură o gestionare eficientă a datelor, o logica de afaceri coerentă și o interfață prietenoasă pentru utilizatori.
 
-    b.Property<int>("Genre")
-        .HasColumnType("int");
+![alt text](C:\Users\codru.LAPTOP-F7RR2UR3\Documents\MusicPlatformDAWM\MusicPlatform\74abc51db99c0460a5d78a1d3cffcacb.png)
 
-    b.Property<int>("Likes")
-        .HasColumnType("int");
 
-    b.Property<string>("Name")
-        .IsRequired()
-        .HasColumnType("nvarchar(max)");
 
-    b.Property<int>("Streams")
-        .HasColumnType("int");
 
-    b.HasKey("Id");
 
-    b.HasIndex("ArtistId");
+## Utilizabilitatea aplicatiei
 
-    b.ToTable("Songs");
-});
+Platforma Music Platform este concepută pentru a oferi o experiență personalizată și specifică pentru fiecare tip de utilizator. Aceasta are trei tipuri de utilizatori: Admin, Artist și User. Fiecare tip de utilizator are anumite privilegii și restricții în funcție de rolul său în cadrul aplicației.
 
-modelBuilder.Entity("MusicPlatform.DataLayer.Models.User", b =>
-{
-    b.Property<int>("Id")
-        .ValueGeneratedOnAdd()
-        .HasColumnType("int");
+1. Admin:
+   - Adminul este utilizatorul cu cele mai mari privilegii și acces nelimitat la toate funcționalitățile platformei.
+   - Poate adăuga, edita și șterge artiști, albume, melodii și playlist-uri.
+   - Are dreptul de a gestiona conturile utilizatorilor, inclusiv crearea, modificarea și ștergerea acestora.
+   - Are puterea de a aproba sau respinge cererile de înscriere ale artiștilor noi.
+   - Poate gestiona permisiunile și rolurile utilizatorilor, inclusiv alocarea rolului de Artist sau User.
 
-    b.Property<string>("Discriminator")
-        .IsRequired()
-        .HasColumnType("nvarchar(max)");
+2. Artist:
+   - Artistul este utilizatorul care își promovează și își gestionează propriile creații muzicale pe platformă.
+   - Are dreptul de a adăuga, edita și șterge propriile melodii și albume.
+   - Poate vizualiza și gestiona detaliile personale, inclusiv informații despre profil și contul său.
+   - Nu are acces la funcționalitățile de administrare a altor utilizatori sau a altor artiști.
+   - Are posibilitatea de a vedea statistici și rapoarte privind performanța melodiilor și albumelor sale.
 
-    b.Property<string>("PasswordHash")
-        .IsRequired()
-        .HasColumnType("nvarchar(max)");
+3. User:
+   - Userul este utilizatorul obișnuit al platformei, care explorează și ascultă muzica oferită de artiști.
+   - Poate crea și gestiona propriile playlist-uri, adăugând și eliminând melodii.
+   - Are acces la funcționalitățile de căutare, redare și urmărire a artiștilor preferați.
+   - Poate vedea detalii despre albumele și melodiile disponibile pe platformă, dar nu poate modifica sau șterge conținutul creat de alți utilizatori sau artiști.
 
-    b.Property<string>("Role")
-        .IsRequired()
-        .HasColumnType("nvarchar(max)");
+Pentru a asigura securitatea și confidențialitatea datelor, platforma Music Platform implementează un sistem de autentificare și autorizare. Utilizatorii trebuie să se autentifice înainte de a avea acces la funcționalitățile platformei. Autentificarea se realizează prin intermediul unui sistem de autentificare bazat pe roluri, unde fiecare utilizator are un set specific de permisiuni în funcție de rolul său.
 
-    b.Property<string>("Username")
-        .IsRequired()
-        .HasColumnType("nvarchar(max)");
+Adminul are acces nelimitat și nu este restricționat de nicio autorizare specifică. Artistul poate accesa doar funcționalitățile legate de gestionarea propriilor creații muzicale, iar Userul poate accesa doar funcționalitățile de căutare, redare și gestionare a propriilor playlist-uri.
 
-    b.HasKey("Id");
+Prin această abordare, Music Platform oferă o experiență personalizată și adaptată
 
-    b.ToTable("Users");
+ nevoilor fiecărui tip de utilizator, asigurând în același timp securitatea și protecția datelor. Utilizatorii pot explora și se pot bucura de muzica preferată, artiștii își pot promova creațiile, iar adminul poate gestiona și monitoriza întreaga platformă.
 
-    b.HasDiscriminator<string>("Discriminator").HasValue("User");
 
-    b.UseTphMappingStrategy();
-});
 
-modelBuilder.Entity("MusicPlatform.DataLayer.Models.Artist", b =>
-{
-    b.HasBaseType("MusicPlatform.DataLayer.Models.User");
 
-    b.Property<string>("Description")
-        .IsRequired()
-        .HasColumnType("nvarchar(max)");
 
-    b.Property<int>("Genre")
-        .HasColumnType("int");
+## Concluzie
 
-    b.Property<string>("Name")
-        .IsRequired()
-        .HasColumnType("nvarchar(max)");
+În concluzie, proiectul Music Platform reprezintă o platformă complexă și captivantă, concepută pentru a aduce împreună artiști și iubitori ai muzicii. Acest proiect are ca scop principal facilitarea și îmbunătățirea experienței utilizatorilor în ceea ce privește descoperirea, ascultarea și promovarea muzicii.
 
-    b.HasDiscriminator().HasValue("Artist");
-});
+Prin intermediul arhitecturii bine definită și a utilizării tehnologiilor moderne, Music Platform oferă o gamă largă de funcționalități și caracteristici adaptate nevoilor diferitelor tipuri de utilizatori. Designul modular și structurat, cu componente precum Repository, Service și Controller, permite o dezvoltare flexibilă și ușurință în gestionarea datelor.
 
-modelBuilder.Entity("MusicPlatform.DataLayer.Models.Song", b =>
-{
-    b.HasOne("MusicPlatform.DataLayer.Models.Artist", "Artist")
-        .WithMany("Songs")
-        .HasForeignKey("ArtistId")
-        .OnDelete(DeleteBehavior.Cascade)
-        .IsRequired();
+Utilizatorii platformei se bucură de o interfață intuitivă și prietenoasă, care facilitează navigarea, căutarea și redarea melodiilor preferate. Artistul beneficiază de instrumente puternice pentru a-și gestiona și promova creațiile muzicale, în timp ce adminul are acces total și controlează funcționalitățile și permisiunile întregii platforme.
 
-    b.Navigation("Artist");
-});
+De asemenea, securitatea datelor și protecția informațiilor personale sunt aspecte esențiale în acest proiect. Implementarea autentificării și autorizării asigură că doar utilizatorii autorizați au acces la funcționalitățile specifice rolului lor.
 
-modelBuilder.Entity("MusicPlatform.DataLayer.Models.Artist", b =>
-{
-    b.Navigation("Songs");
-});
-```
+Prin intermediul integrării cu o bază de date robustă și scalabilă, cum ar fi SQL Server, se realizează o gestionare eficientă și fiabilă a datelor, asigurându-se performanța și disponibilitatea în timp real a informațiilor.
 
-Această implementare configurează corect tabelele și relațiile dintre acestea în baza de date. Sunt definite tabelele "Songs" și "Users", precum și relația dintre acestea prin cheia străină "ArtistId" din tabela "Songs". De asemenea, este definită relația de moștenire între clasa `Artist` și clasa `User`, utilizând `Has
-
-BaseType` și `HasDiscriminator`. Proprietățile și tipurile de date sunt specificate corespunzător pentru fiecare câmp al tabelelor.
-
-Este important să menționăm că această implementare a modelului bazei de date este generată automat de către Entity Framework Core pe baza structurii claselor de entități și a relațiilor definite între acestea.
-
-Cu această implementare a comunicării server-bază de date, aplicația "Music Platform" beneficiază de toate avantajele oferite de Entity Framework Core, precum gestionarea simplificată a entităților, relațiilor și operațiilor CRUD, precum și abstracția de la detalii specifice bazei de date subiacente.
-
-
-
-## Capitolul 4: Implementarea controllerelor API în proiectul "Music Platform"
-
-Implementarea controllerelor API în cadrul proiectului "Music Platform" se face prin intermediul claselor din namespace-ul MusicPlatformAPI.Controllers. Aceste clase definesc rutele, acțiunile și logica asociată fiecărei rute API.
-Clasa AccountController gestionează acțiunile legate de autentificare și înregistrare a utilizatorilor și artiștilor. Rutele definite sunt /api/account/register/user, /api/account/register/artist și /api/account/login. Metoda RegisterUser se ocupă de înregistrarea unui utilizator, RegisterArtist se ocupă de înregistrarea unui artist, iar Login gestionează procesul de autentificare.
-Clasa ArtistController gestionează acțiunile legate de artiști. Rutele definite sunt /api/artist/get-all, /api/artist/get/{artistId}, /api/artist/edit și /api/artist/delete. Metodele GetAll și Get returnează toți artiștii sau un artist specific în funcție de ID-ul artistului, respectiv. Metodele Edit și Delete permit actualizarea și ștergerea unui artist în funcție de ID-ul acestuia. Aceste două acțiuni necesită autorizarea utilizatorului, înrolat ca "Admin" sau "Artist".
-
-Clasa SongController gestionează acțiunile legate de cântece. Rutele definite sunt /api/song/get-all, /api/song/get/{songId}, /api/song/add, /api/song/edit și /api/song/delete. Metodele GetAll și Get returnează toate cântecele sau un cântec specific în funcție de ID-ul acestuia. Metoda Add permite adăugarea unui cântec nou, cu condiția ca utilizatorul autentificat să fie un "Admin" sau "Artist" și să fie proprietarul cântecului. Metoda Edit permite actualizarea unui cântec existent în funcție de ID-ul acestuia și proprietarul să fie "Admin" sau "Artist". Metoda Delete permite ștergerea unui cântec în funcție de ID-ul acestuia și proprietarul să fie "Admin" sau "Artist".
-
-Acestea sunt implementările de bază ale controllerelor API în cadrul proiectului "Music Platform". Acestea oferă funcționalități esențiale pentru gestionarea utilizatorilor, artiștilor și cântecelor prin intermediul aplicației web.
-
-```csharp
-public class SongNotFoundExceptionFilter : ExceptionFilterAttribute
-{
-    public override void OnException(ExceptionContext context)
-    {
-        if (context.Exception is SongNotFoundException)
-        {
-            var result = new ObjectResult(context.Exception.Message)
-            {
-                StatusCode = 404
-            };
-
-            context.Result = result;
-            context.ExceptionHandled = true;
-        }
-
-        base.OnException(context);
-    }
-}
-```
-
-Acest cod definesc o clasă denumită `SongNotFoundExceptionFilter` care moștenește clasa `ExceptionFilterAttribute`, utilizată în framework-ul ASP.NET pentru a manipula excepțiile.
-
-În metoda suprascrisă `OnException`, se verifică dacă excepția aruncată este de tipul `SongNotFoundException` prin intermediul construcției `if (context.Exception is SongNotFoundException)`. Dacă condiția este îndeplinită, se creează un nou obiect `ObjectResult`, care conține mesajul de eroare al excepției, și se atribuie codul de stare HTTP 404 (`StatusCode = 404`).
-
-Apoi, se setează rezultatul obținut ca rezultat al contextului excepției prin intermediul proprietății `context.Result`. De asemenea, se marchează excepția ca fiind tratată prin setarea proprietății `context.ExceptionHandled` la `true`.
-
-La final, se apelează metoda `OnException` a clasei de bază (`base.OnException(context)`) pentru a menține comportamentul implicit al gestionării excepțiilor.
-
-Astfel, prin utilizarea acestui filtru în cadrul unei aplicații ASP.NET, se poate intercepta excepția `SongNotFoundException` și se poate returna un răspuns HTTP cu codul de stare 404 și mesajul de eroare asociat.
-
-
-
-## Capitolul 5) Tratarea excepțiilor
-
-Pentru tratarea excepțiilor în cadrul aplicației, se poate folosi mecanismul de gestionare a excepțiilor oferit de C# și ASP.NET. Se pot implementa filtre de excepții pentru a captura și trata diverse erori și excepții, cum ar fi erori de validare, acces neautorizat sau erori de bază de date.
-
-Aceasta este o descriere actualizată a documentației pentru proiectul "Music Platform" bazată pe structurile modelelor furnizate. Detaliile specifice și implementarea detaliată vor depinde de cerințele și arhitectura exactă a proiectului.
+În ansamblu, proiectul Music Platform demonstrează o abordare profesională și meticuloasă în dezvoltarea unei platforme de muzică modernă. Aceasta reușește să aducă împreună artiști și iubitori ai muzicii, oferind o experiență captivantă, personalizată și sigură pentru toți utilizatorii. Prin intermediul tehnologiilor de ultimă generație și a unei arhitecturi bine construite, Music Platform se poziționează ca o soluție inovatoare și de încredere în industria muzicală digitală.
