@@ -48,5 +48,12 @@ namespace MusicPlatformAPI.Controllers
 
             return Unauthorized();
         }
+
+        [HttpDelete("delete/{userId}")]
+        public IActionResult Delete(int userId)
+        {
+            authenticationService.DeleteUser(userId);
+            return Ok();
+        }
     }
 }

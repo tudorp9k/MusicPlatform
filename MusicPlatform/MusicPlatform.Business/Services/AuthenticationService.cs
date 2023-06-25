@@ -112,5 +112,20 @@ namespace MusicPlatform.Business.Services
             return null;
 
         }
+
+        public bool DeleteUser(int userId)
+        {
+            var user = unitOfWork.Users.GetById(userId);
+
+            if (user == null)
+            {
+                return false;
+            }
+
+            unitOfWork.Users.Remove(user);
+            unitOfWork.SaveChanges();
+
+            return true;
+        }
     }
 }
