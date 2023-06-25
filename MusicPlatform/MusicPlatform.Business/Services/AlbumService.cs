@@ -95,30 +95,6 @@ namespace MusicPlatform.Business.Services
             return true;
         }
 
-        public bool AddArtistToAlbum(int artistId, int albumId)
-        {
-            var artist = unitOfWork.Artists.GetById(artistId);
-            var album = unitOfWork.Albums.GetById(albumId);
-
-            if (artist == null)
-            {
-                throw new ArtistNotFoundException();
-            }
-
-            if (album == null)
-            {
-                throw new AlbumNotFoundException();
-            }
-
-            album.ArtistId = artistId;
-            album.Artist = artist;
-
-            unitOfWork.Albums.Update(album);
-            unitOfWork.SaveChanges();
-
-            return true;
-        }
-
         public bool UpdateAlbum(UpdateAlbumDTO payload)
         {
             if (payload == null)

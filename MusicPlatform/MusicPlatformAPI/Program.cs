@@ -42,6 +42,7 @@ builder.Services.AddControllers(options =>
     options.Filters.Add(new ArtistNotFoundExceptionFilter());
     options.Filters.Add(new SongNotFoundExceptionFilter());
     options.Filters.Add(new AlbumNotFoundExceptionFilter());
+    options.Filters.Add(new SingleNotFoundExceptionFilter());
 });
 
 builder.Services.AddDbContext<MusicDbContext>();
@@ -52,6 +53,7 @@ builder.Services.AddScoped<AuthenticationService>();
 builder.Services.AddScoped<ArtistService>();
 builder.Services.AddScoped<SongService>();
 builder.Services.AddScoped<AlbumService>();
+builder.Services.AddScoped<SingleService>();
 
 builder.Services.AddScoped<UserRepository>();
 builder.Services.AddScoped<ArtistRepository>();

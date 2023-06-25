@@ -5,6 +5,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Single = MusicPlatform.DataLayer.Models.Single;
 
 namespace MusicPlatform.Business
 {
@@ -52,6 +53,26 @@ namespace MusicPlatform.Business
                 ArtistName = album.Artist.Name,
                 Songs = album.Songs.Select(s => MapToSongDTO(s)).ToList(),
                 ArtistId = album.ArtistId
+            };
+        }
+
+        public static DetailSingleDTO MapToDetailSingleDTO(Single single)
+        {
+            return new DetailSingleDTO
+            {
+                Name = single.Name,
+                ReleaseDate = single.ReleaseDate.ToString()
+            };
+        }
+
+        public static FullSingleDTO MapToFullSingleDTO(Single single)
+        {
+            return new FullSingleDTO
+            {
+                ArtistId = (int)single.ArtistId,
+                Name = single.Name,
+                ReleaseDate = single.ReleaseDate.ToString(),
+                Song = MapToSongDTO(single.Song),
             };
         }
     }
