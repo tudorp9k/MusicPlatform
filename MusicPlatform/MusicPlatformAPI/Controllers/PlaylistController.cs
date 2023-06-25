@@ -21,7 +21,7 @@ namespace MusicPlatformAPI.Controllers
 
         [HttpGet("get-all")]
         [AllowAnonymous]
-        public ActionResult<List<PlaylistDTO>> GetAll()
+        public ActionResult<List<DetailPlaylistDTO>> GetAll()
         {
             var playlists = playlistService.GetAll();
 
@@ -30,7 +30,7 @@ namespace MusicPlatformAPI.Controllers
 
         [HttpGet("get/{playlistId}")]
         [AllowAnonymous]
-        public ActionResult<PlaylistDTO> Get(int playlistId)
+        public ActionResult<FullPlaylistDTO> Get(int playlistId)
         {
             var playlist = playlistService.GetById(playlistId);
 
@@ -38,8 +38,8 @@ namespace MusicPlatformAPI.Controllers
         }
 
         [HttpPost("add")]
-        [Authorize(Roles = "Admin,Artist")]
-        public IActionResult Add(PlaylistDTO playlist, int userId)
+        [Authorize(Roles = "Listener,Admin,Artist")]
+        public IActionResult Add(DetailPlaylistDTO playlist, int userId)
         {
             var result = playlistService.AddPlaylist(playlist, userId);
 
@@ -59,9 +59,12 @@ namespace MusicPlatformAPI.Controllers
 
             var playlist = playlistService.GetById(playlistId);
 
-            if (playlist.UserId.ToString() != userId)
+            if (!User.IsInRole("Admin"))
             {
-                return Forbid();
+                if (playlist.UserId.ToString() != userId)
+                {
+                    return Forbid();
+                }
             }
 
             var result = playlistService.AddSongToPlaylist(songId, playlistId);
@@ -80,9 +83,12 @@ namespace MusicPlatformAPI.Controllers
         {
             var userId = User.FindFirst("userId")?.Value;
 
-            if (playlistUpdate.UserId.ToString() != userId)
+            if (!User.IsInRole("Admin"))
             {
-                return Forbid();
+                if (playlistUpdate.UserId.ToString() != userId)
+                {
+                    return Forbid();
+                }
             }
 
             var result = playlistService.UpdatePlaylist(playlistUpdate);
@@ -103,9 +109,12 @@ namespace MusicPlatformAPI.Controllers
 
             var playlist = playlistService.GetById(playlistId);
 
-            if (playlist.UserId.ToString() != userId)
+            if (!User.IsInRole("Admin"))
             {
-                return Forbid();
+                if (playlist.UserId.ToString() != userId)
+                {
+                    return Forbid();
+                }
             }
 
             var result = playlistService.DeletePlaylist(playlistId);

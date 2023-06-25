@@ -19,7 +19,7 @@ namespace MusicPlatform.Business.Services
             this.unitOfWork = unitOfWork ?? throw new ArgumentNullException(nameof(unitOfWork));
         }
 
-        public List<PlaylistDTO> GetAll()
+        public List<DetailPlaylistDTO> GetAll()
         {
             var playlists = unitOfWork.Playlists.GetAll();
 
@@ -28,10 +28,10 @@ namespace MusicPlatform.Business.Services
                 throw new PlaylistNotFoundException();
             }
 
-            return playlists.Select(p => Mapper.MapToPlaylistDTO(p)).ToList();
+            return playlists.Select(p => Mapper.MapToDetailPlaylistDTO(p)).ToList();
         }
 
-        public PlaylistDTO GetById(int playlistId)
+        public FullPlaylistDTO GetById(int playlistId)
         {
             var playlist = unitOfWork.Playlists.GetByIdWithArtistAndSongs(playlistId);
 
@@ -40,10 +40,10 @@ namespace MusicPlatform.Business.Services
                 throw new PlaylistNotFoundException();
             }
 
-            return Mapper.MapToPlaylistDTO(playlist);
+            return Mapper.MapToFullPlaylistDTO(playlist);
         }
 
-        public PlaylistDTO AddPlaylist(PlaylistDTO payload, int userId)
+        public DetailPlaylistDTO AddPlaylist(DetailPlaylistDTO payload, int userId)
         {
             if (payload == null)
             {
@@ -63,13 +63,12 @@ namespace MusicPlatform.Business.Services
                 Description = payload.Description,
                 UserId = userId,
                 User = user,
-                Songs = new List<Song>()
             };
 
             unitOfWork.Playlists.Insert(playlist);
             unitOfWork.SaveChanges();
 
-            return Mapper.MapToPlaylistDTO(playlist);
+            return Mapper.MapToDetailPlaylistDTO(playlist);
         }
 
         public bool AddSongToPlaylist(int songId, int playlistId)
@@ -87,7 +86,8 @@ namespace MusicPlatform.Business.Services
                 throw new PlaylistNotFoundException();
             }
 
-            playlist.Songs.Add(song);
+            song.Playlist = playlist;
+            song.PlaylistId = playlistId;
 
             unitOfWork.Playlists.Update(playlist);
             unitOfWork.SaveChanges();

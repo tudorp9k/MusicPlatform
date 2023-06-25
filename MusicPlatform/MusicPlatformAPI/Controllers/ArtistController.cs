@@ -2,6 +2,7 @@
 using Microsoft.AspNetCore.Mvc;
 using MusicPlatform.Business.Dtos;
 using MusicPlatform.Business.Services;
+using MusicPlatform.DataLayer.Models;
 using MusicPlatformAPI.Filters;
 
 namespace MusicPlatformAPI.Controllers
@@ -39,6 +40,15 @@ namespace MusicPlatformAPI.Controllers
         [Authorize(Roles = "Admin,Artist")]
         public IActionResult Edit(ArtistUpdateDto artistUpdate)
         {
+            var userId = User.FindFirst("userId")?.Value;
+
+            if (!User.IsInRole("Admin"))
+            {
+                if (artistUpdate.Id.ToString() != userId)
+                {
+                    return Forbid();
+                }
+            }
             var result = artistService.UpdateArtist(artistUpdate);
 
             if (!result)
@@ -53,6 +63,16 @@ namespace MusicPlatformAPI.Controllers
         [Authorize(Roles = "Admin,Artist")]
         public IActionResult Delete(int artistId)
         {
+            var userId = User.FindFirst("userId")?.Value;
+
+            if (!User.IsInRole("Admin"))
+            {
+                if (artistId.ToString() != userId)
+                {
+                    return Forbid();
+                }
+            }
+
             var result = artistService.DeleteArtist(artistId);
 
             if (!result)

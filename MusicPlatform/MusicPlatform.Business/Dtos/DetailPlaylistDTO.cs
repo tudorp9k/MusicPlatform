@@ -6,12 +6,9 @@ using System.Threading.Tasks;
 
 namespace MusicPlatform.Business.Dtos
 {
-    public class EpDto
+    public class DetailPlaylistDTO
     {
         public string Name { get; set; }
-        public string ReleaseDate { get; set; }
-        public int ArtistId { get; set; }
-        public List<SongDto> Songs { get; set; }
-
+        public string Description { get; set; }
     }
 }
