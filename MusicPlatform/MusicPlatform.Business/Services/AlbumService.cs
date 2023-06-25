@@ -50,16 +50,23 @@ namespace MusicPlatform.Business.Services
                 return null;
             }
 
+            var artist = unitOfWork.Artists.GetById(artistId);
+
+            if (artist == null)
+            {
+                throw new ArtistNotFoundException();
+            }
+
             var album = new Album
             {
                 Name = payload.Name,
                 ReleaseDate = DateTime.Parse(payload.ReleaseDate),
+                ArtistId = artistId,
+                Artist = artist,
             };
 
             unitOfWork.Albums.Insert(album);
             unitOfWork.SaveChanges();
-
-            AddArtistToAlbum(artistId, album.Id);
 
             return Mapper.MapToDetailAlbumDTO(album);
         }
@@ -81,8 +88,6 @@ namespace MusicPlatform.Business.Services
 
             song.AlbumId = albumId;
             song.Album = album;
-
-            album.Songs.Add(song);
 
             unitOfWork.Songs.Update(song);
             unitOfWork.SaveChanges();

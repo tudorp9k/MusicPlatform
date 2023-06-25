@@ -50,6 +50,20 @@ namespace MusicPlatformAPI.Controllers
             return Ok(result);
         }
 
+        [HttpPost("add-song")]
+        [Authorize(Roles = "Admin,Artist")]
+        public IActionResult AddSong(int songId, int albumId)
+        {
+            var result = albumService.AddSongToAlbum(songId, albumId);
+
+            if (result == null)
+            {
+                return BadRequest("Song could not be added to album");
+            }
+
+            return Ok();
+        }
+
         [HttpPatch("edit")]
         [Authorize(Roles = "Admin,Artist")]
         public IActionResult Edit(UpdateAlbumDTO albumUpdate)
