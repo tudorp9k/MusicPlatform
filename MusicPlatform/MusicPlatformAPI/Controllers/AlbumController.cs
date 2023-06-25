@@ -54,9 +54,18 @@ namespace MusicPlatformAPI.Controllers
         [Authorize(Roles = "Admin,Artist")]
         public IActionResult AddSong(int songId, int albumId)
         {
+            var userId = User.FindFirst("userId")?.Value;
+
+            var album = albumService.GetById(albumId);
+
+            if (album.ArtistId.ToString() != userId)
+            {
+                return Forbid();
+            }
+
             var result = albumService.AddSongToAlbum(songId, albumId);
 
-            if (result == null)
+            if (!result)
             {
                 return BadRequest("Song could not be added to album");
             }
