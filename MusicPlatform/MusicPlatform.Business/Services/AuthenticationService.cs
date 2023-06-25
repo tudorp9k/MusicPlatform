@@ -23,6 +23,26 @@ namespace MusicPlatform.Business.Services
             this.authService = authService ?? throw new ArgumentNullException(nameof(authService));
         }
 
+        public void RegisterAdmin(UserDto registerData)
+        {
+            if (registerData == null)
+            {
+                return;
+            }
+
+            var hashedPassword = authService.HashPassword(registerData.Password);
+
+            var user = new User
+            {
+                Username = registerData.Username,
+                PasswordHash = hashedPassword,
+                Role = UserRole.Admin.ToString()
+            };
+
+            unitOfWork.Users.Insert(user);
+            unitOfWork.SaveChanges();
+        }
+
         public void Register(UserDto registerData)
         {
             if (registerData == null)
@@ -68,6 +88,13 @@ namespace MusicPlatform.Business.Services
 
         public string Validate(UserDto payload)
         {
+            var admin = unitOfWork.Users.GetByUsername(payload.Username);
+
+            if (admin != null && authService.VerifyHashedPassword(admin.PasswordHash, payload.Password))
+            {
+                return authService.GetToken(admin);
+            }
+
             var artist = unitOfWork.Artists.GetByUsername(payload.Username);
 
             if (artist != null && authService.VerifyHashedPassword(artist.PasswordHash, payload.Password))

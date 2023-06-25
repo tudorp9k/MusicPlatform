@@ -29,6 +29,13 @@ namespace MusicPlatformAPI.Controllers
             return Ok();
         }
 
+        [HttpPost("register/admin")]
+        public IActionResult RegisterAdmin([FromBody] UserDto request)
+        {
+            authenticationService.RegisterAdmin(request);
+            return Ok();
+        }
+
         [HttpPost("login")]
         public IActionResult Login([FromBody] UserDto request)
         {
