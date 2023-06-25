@@ -75,5 +75,16 @@ namespace MusicPlatform.Business
                 Song = MapToSongDTO(single.Song),
             };
         }
+
+        public static PlaylistDTO MapToPlaylistDTO(Playlist playlist)
+        {
+            return new PlaylistDTO
+            {
+                Id = playlist.Id,
+                Name = playlist.Name,
+                Description = playlist.Description,
+                UserId = playlist.UserId
+            };
+        }
     }
 }

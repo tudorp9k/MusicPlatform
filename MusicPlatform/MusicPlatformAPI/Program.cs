@@ -43,6 +43,7 @@ builder.Services.AddControllers(options =>
     options.Filters.Add(new SongNotFoundExceptionFilter());
     options.Filters.Add(new AlbumNotFoundExceptionFilter());
     options.Filters.Add(new SingleNotFoundExceptionFilter());
+    options.Filters.Add(new PlaylistNotFoundExceptionFilter());
 });
 
 builder.Services.AddDbContext<MusicDbContext>();
