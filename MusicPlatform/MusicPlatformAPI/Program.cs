@@ -56,6 +56,8 @@ builder.Services.AddScoped<ArtistService>();
 builder.Services.AddScoped<SongService>();
 builder.Services.AddScoped<AlbumService>();
 builder.Services.AddScoped<SingleService>();
+builder.Services.AddScoped<PlaylistService>();
+builder.Services.AddScoped<EpService>();
 
 builder.Services.AddScoped<UserRepository>();
 builder.Services.AddScoped<ArtistRepository>();

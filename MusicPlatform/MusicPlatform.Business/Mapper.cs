@@ -82,7 +82,9 @@ namespace MusicPlatform.Business
             {
                 Name = playlist.Name,
                 Description = playlist.Description,
-                UserId = playlist.UserId
+                UserId = playlist.UserId,
+                Songs = playlist.Songs.Select(s => MapToSongDTO(s)).ToList(),
+
             };
         }
 
@@ -92,7 +94,8 @@ namespace MusicPlatform.Business
             {
                 Name = ep.Name,
                 ReleaseDate = ep.ReleaseDate.ToString(),
-                ArtistId = ep.ArtistId
+                ArtistId = ep.ArtistId,
+                Songs = ep.Songs.Select(s => MapToSongDTO(s)).ToList(),
             };
         }
     }
