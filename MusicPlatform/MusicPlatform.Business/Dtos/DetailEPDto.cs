@@ -8,6 +8,7 @@ namespace MusicPlatform.Business.Dtos
 {
     public class DetailEPDto
     {
+        public int Id { get; set; }
         public string Name { get; set; }
         public string ReleaseDate { get; set; }
     }

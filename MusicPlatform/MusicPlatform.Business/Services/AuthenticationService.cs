@@ -127,5 +127,12 @@ namespace MusicPlatform.Business.Services
 
             return true;
         }
+
+        public List<UserDto> GetAllUsers()
+        {
+            var users = unitOfWork.Users.GetAll();
+
+            return users.Select(u => Mapper.MapToUserDTO(u)).ToList();
+        }
     }
 }

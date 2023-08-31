@@ -11,10 +11,21 @@ namespace MusicPlatform.Business
 {
     public static class Mapper
     {
+        public static UserDto MapToUserDTO(User user)
+        {
+            return new UserDto
+            {
+                Id = user.Id,
+                Username = user.Username,
+                Password = user.PasswordHash,
+                Role = user.Role,
+            };
+        }
         public static ArtistDto MapToArtistDTO(Artist artist)
         {
             return new ArtistDto
             {
+                Id = artist.Id,
                 Username = artist.Username,
                 PasswordHash = artist.PasswordHash,
                 Name = artist.Name,
@@ -27,6 +38,7 @@ namespace MusicPlatform.Business
         {
             return new SongDto
             {
+                Id = song.Id,
                 Name = song.Name,
                 Genre = song.Genre.ToString(),
                 Likes = song.Likes,
@@ -39,6 +51,7 @@ namespace MusicPlatform.Business
         {
             return new DetailAlbumDTO
             {
+                Id = album.Id,
                 Name = album.Name,
                 ReleaseDate = album.ReleaseDate.ToString()
             };
@@ -48,6 +61,7 @@ namespace MusicPlatform.Business
         {
             return new FullAlbumDTO
             {
+                Id = album.Id,
                 Name = album.Name,
                 ReleaseDate = album.ReleaseDate.ToString(),
                 ArtistName = album.Artist.Name,
@@ -60,6 +74,7 @@ namespace MusicPlatform.Business
         {
             return new DetailSingleDTO
             {
+                Id = single.Id,
                 Name = single.Name,
                 ReleaseDate = single.ReleaseDate.ToString()
             };
@@ -69,6 +84,7 @@ namespace MusicPlatform.Business
         {
             return new FullSingleDTO
             {
+                Id = single.Id,
                 ArtistId = (int)single.ArtistId,
                 Name = single.Name,
                 ReleaseDate = single.ReleaseDate.ToString(),
@@ -80,6 +96,7 @@ namespace MusicPlatform.Business
         {
             return new DetailPlaylistDTO
             {
+                Id = playlist.Id,
                 Name = playlist.Name,
                 Description = playlist.Description,
             };
@@ -89,6 +106,7 @@ namespace MusicPlatform.Business
         {
             return new FullPlaylistDTO
             {
+                Id = playlist.Id,
                 Name = playlist.Name,
                 Description = playlist.Description,
                 UserId = playlist.UserId,
@@ -101,6 +119,7 @@ namespace MusicPlatform.Business
         {
             return new DetailEPDto
             {
+                Id = ep.Id,
                 Name = ep.Name,
                 ReleaseDate = ep.ReleaseDate.ToString(),
             };
@@ -110,6 +129,7 @@ namespace MusicPlatform.Business
         {
             return new FullEpDto
             {
+                Id = ep.Id,
                 Name = ep.Name,
                 ReleaseDate = ep.ReleaseDate.ToString(),
                 ArtistId = ep.ArtistId,

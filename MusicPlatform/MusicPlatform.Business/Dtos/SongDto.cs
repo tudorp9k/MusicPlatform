@@ -9,6 +9,7 @@ namespace MusicPlatform.Business.Dtos
 {
     public class SongDto
     {
+        public int Id { get; set; }
         public string Name { get; set; }
         public string Genre { get; set; }
         public int Likes { get; set; }

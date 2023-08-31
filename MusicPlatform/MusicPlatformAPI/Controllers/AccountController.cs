@@ -15,6 +15,13 @@ namespace MusicPlatformAPI.Controllers
             this.authenticationService = authenticationService ?? throw new ArgumentNullException(nameof(authenticationService));
         }
 
+        [HttpGet("all-users")]
+        public ActionResult<List<UserDto>> Get()
+        {
+            var users = authenticationService.GetAllUsers();
+            return Ok(users);
+        }
+
         [HttpPost("register/user")]
         public IActionResult RegisterUser([FromBody] UserDto request)
         {

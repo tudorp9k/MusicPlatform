@@ -8,6 +8,7 @@ namespace MusicPlatform.Business.Dtos
 {
     public class DetailSingleDTO
     {
+        public int Id { get; set; }
         public string Name { get; set; }
         public string ReleaseDate { get; set; }
     }
