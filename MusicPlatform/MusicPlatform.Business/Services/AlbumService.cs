@@ -43,7 +43,7 @@ namespace MusicPlatform.Business.Services
             return Mapper.MapToFullAlbumDTO(album);
         }
 
-        public DetailAlbumDTO AddAlbum(DetailAlbumDTO payload, int artistId)
+        public DetailAlbumDTO AddAlbum(AddAlbumDto payload, int artistId)
         {
             if (payload == null)
             {

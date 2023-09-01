@@ -27,7 +27,7 @@ namespace MusicPlatform.Business
             {
                 Id = artist.Id,
                 Username = artist.Username,
-                PasswordHash = artist.PasswordHash,
+                Password = artist.PasswordHash,
                 Name = artist.Name,
                 Description = artist.Description,
                 Genre = artist.Genre.ToString()
@@ -82,14 +82,20 @@ namespace MusicPlatform.Business
 
         public static FullSingleDTO MapToFullSingleDTO(Single single)
         {
-            return new FullSingleDTO
+            var fullSingleDto = new FullSingleDTO
             {
                 Id = single.Id,
                 ArtistId = (int)single.ArtistId,
                 Name = single.Name,
                 ReleaseDate = single.ReleaseDate.ToString(),
-                Song = MapToSongDTO(single.Song),
             };
+
+            if (single.Song != null)
+            {
+                fullSingleDto.Song = MapToSongDTO(single.Song);
+            }
+
+            return fullSingleDto;
         }
 
         public static DetailPlaylistDTO MapToDetailPlaylistDTO(Playlist playlist)

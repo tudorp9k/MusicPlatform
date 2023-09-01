@@ -43,7 +43,7 @@ namespace MusicPlatform.Business.Services
             return Mapper.MapToFullPlaylistDTO(playlist);
         }
 
-        public DetailPlaylistDTO AddPlaylist(DetailPlaylistDTO payload, int userId)
+        public DetailPlaylistDTO AddPlaylist(AddPlaylistDto payload, int userId)
         {
             if (payload == null)
             {

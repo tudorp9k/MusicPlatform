@@ -34,9 +34,9 @@ namespace MusicPlatformAPI.Controllers
             return Ok(single);
         }
 
-        [HttpPost("add")]
+        [HttpPost("add/{artistId}")]
         [Authorize(Roles = "Admin,Artist")]
-        public IActionResult Add(DetailSingleDTO single, int artistId)
+        public IActionResult Add(AddSingleDto single, int artistId)
         {
             var userId = User.FindFirst("userId")?.Value;
 
@@ -73,6 +73,32 @@ namespace MusicPlatformAPI.Controllers
             if (!result)
             {
                 return BadRequest("Single could not be updated");
+            }
+
+            return Ok();
+        }
+
+        [HttpPost("add-song/{songId}/{singleId}")]
+        [Authorize(Roles = "Admin,Artist")]
+        public IActionResult AddSongToSingle(int songId, int singleId)
+        {
+            var userId = User.FindFirst("userId")?.Value;
+
+            var single = singleService.GetById(singleId);
+
+            if (!User.IsInRole("Admin"))
+            {
+                if (single.ArtistId.ToString() != userId)
+                {
+                    return Forbid();
+                }
+            }
+
+            var result = singleService.AddSongToSingle(songId, singleId);
+
+            if (!result)
+            {
+                return BadRequest("Song could not be added to playlist");
             }
 
             return Ok();

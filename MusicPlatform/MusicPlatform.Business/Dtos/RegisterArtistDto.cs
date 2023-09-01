@@ -2,16 +2,16 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
-using System.Text.Json.Serialization;
 using System.Threading.Tasks;
 
 namespace MusicPlatform.Business.Dtos
 {
-    public class UserDto
+    public class RegisterArtistDto
     {
-        public int Id { get; set; }
         public string Username { get; set; }
         public string Password { get; set; }
-        public string Role { get; set; }
+        public string Name { get; set; }
+        public string Description { get; set; }
+        public string Genre { get; set; }
     }
 }

@@ -43,7 +43,7 @@ namespace MusicPlatform.Business.Services
             return Mapper.MapToFullEpDTO(ep);
         }
 
-        public DetailEPDto AddEP(DetailEPDto payload, int artistId)
+        public DetailEPDto AddEP(AddEPDto payload, int artistId)
         {
             if (payload == null)
             {

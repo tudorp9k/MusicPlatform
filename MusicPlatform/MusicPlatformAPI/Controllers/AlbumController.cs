@@ -36,10 +36,20 @@ namespace MusicPlatformAPI.Controllers
             return Ok(album);
         }
 
-        [HttpPost("add")]
+        [HttpPost("add/{artistId}")]
         [Authorize(Roles = "Admin,Artist")]
-        public IActionResult Add(DetailAlbumDTO album, int artistId)
+        public IActionResult Add(AddAlbumDto album, int artistId)
         {
+            var userId = User.FindFirst("userId")?.Value;
+
+            if (!User.IsInRole("Admin"))
+            {
+                if (artistId.ToString() != userId)
+                {
+                    return Forbid();
+                }
+            }
+
             var result = albumService.AddAlbum(album, artistId);
 
             if (result == null)
@@ -50,7 +60,7 @@ namespace MusicPlatformAPI.Controllers
             return Ok(result);
         }
 
-        [HttpPost("add-song")]
+        [HttpPost("add-song/{songId}/{albumId}")]
         [Authorize(Roles = "Admin,Artist")]
         public IActionResult AddSong(int songId, int albumId)
         {
@@ -76,7 +86,7 @@ namespace MusicPlatformAPI.Controllers
             return Ok();
         }
 
-        [HttpPatch("edit")]
+        [HttpPut("edit")]
         [Authorize(Roles = "Admin,Artist")]
         public IActionResult Edit(UpdateAlbumDTO albumUpdate)
         {

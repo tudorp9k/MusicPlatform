@@ -4,6 +4,7 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using MusicPlatform.Business.Dtos;
 using MusicPlatform.Business.Services;
+using MusicPlatform.DataLayer.Models;
 using static Microsoft.EntityFrameworkCore.DbLoggerCategory;
 
 namespace MusicPlatformAPI.Controllers
@@ -37,10 +38,20 @@ namespace MusicPlatformAPI.Controllers
             return Ok(playlist);
         }
 
-        [HttpPost("add")]
+        [HttpPost("add/{userId}")]
         [Authorize(Roles = "Listener,Admin,Artist")]
-        public IActionResult Add(DetailPlaylistDTO playlist, int userId)
+        public IActionResult Add(AddPlaylistDto playlist, int userId)
         {
+            var sessionUserId = User.FindFirst("userId")?.Value;
+
+            if (!User.IsInRole("Admin"))
+            {
+                if (userId.ToString() != sessionUserId)
+                {
+                    return Forbid();
+                }
+            }
+
             var result = playlistService.AddPlaylist(playlist, userId);
 
             if (result == null)
@@ -51,7 +62,7 @@ namespace MusicPlatformAPI.Controllers
             return Ok(result);
         }
 
-        [HttpPost("add-song")]
+        [HttpPost("add-song/{songId}/{playlistId}")]
         [Authorize(Roles = "Listener,Admin,Artist")]
         public IActionResult AddSong(int songId, int playlistId)
         {
@@ -77,7 +88,7 @@ namespace MusicPlatformAPI.Controllers
             return Ok();
         }
 
-        [HttpPatch("edit")]
+        [HttpPut("edit")]
         [Authorize(Roles = "Listener,Admin,Artist")]
         public IActionResult Edit(UpdatePlaylistDTO playlistUpdate)
         {

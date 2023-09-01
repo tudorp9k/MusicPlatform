@@ -38,7 +38,7 @@ namespace MusicPlatform.Business.Services
             return Mapper.MapToFullSingleDTO(single);
         }
 
-        public DetailSingleDTO AddSingle(DetailSingleDTO payload, int artistId)
+        public DetailSingleDTO AddSingle(AddSingleDto payload, int artistId)
         {
             if (payload == null)
             {

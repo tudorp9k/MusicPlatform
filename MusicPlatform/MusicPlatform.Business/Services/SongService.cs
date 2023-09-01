@@ -44,7 +44,7 @@ namespace MusicPlatform.Business.Services
             return Mapper.MapToSongDTO(song);
         }
 
-        public SongDto AddSong(SongDto payload)
+        public SongDto AddSong(AddSongDto payload)
         {
             if (payload == null)
             {

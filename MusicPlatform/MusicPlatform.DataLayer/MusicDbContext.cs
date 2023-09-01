@@ -16,7 +16,6 @@ namespace MusicPlatform.DataLayer
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
-            //optionsBuilder.UseSqlServer(ConfigurationManager.ConnectionStrings["MusicPlatform"].ConnectionString);
             optionsBuilder.UseSqlServer("Data Source=localhost;Initial Catalog=MusicPlatform; Encrypt=False; Integrated Security=SSPI");
         }
     }

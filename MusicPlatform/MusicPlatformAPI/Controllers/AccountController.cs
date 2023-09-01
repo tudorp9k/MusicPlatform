@@ -22,29 +22,29 @@ namespace MusicPlatformAPI.Controllers
             return Ok(users);
         }
 
-        [HttpPost("register/user")]
-        public IActionResult RegisterUser([FromBody] UserDto request)
+        [HttpPost("register-listener")]
+        public IActionResult RegisterUser([FromBody] AuthenticateUserDto request)
         {
             authenticationService.Register(request);
             return Ok();
         }
 
-        [HttpPost("register/artist")]
-        public IActionResult RegisterArtist([FromBody] ArtistDto request)
+        [HttpPost("register-artist")]
+        public IActionResult RegisterArtist([FromBody] RegisterArtistDto request)
         {
             authenticationService.Register(request);
             return Ok();
         }
 
-        [HttpPost("register/admin")]
-        public IActionResult RegisterAdmin([FromBody] UserDto request)
+        [HttpPost("register-admin")]
+        public IActionResult RegisterAdmin([FromBody] AuthenticateUserDto request)
         {
             authenticationService.RegisterAdmin(request);
             return Ok();
         }
 
         [HttpPost("login")]
-        public IActionResult Login([FromBody] UserDto request)
+        public IActionResult Login([FromBody] AuthenticateUserDto request)
         {
             var token = authenticationService.Validate(request);
 

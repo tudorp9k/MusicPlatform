@@ -59,7 +59,7 @@ namespace MusicPlatformAPI.Controllers
             return Ok();
         }
 
-        [HttpDelete("delete")]
+        [HttpDelete("delete/{artistId}")]
         [Authorize(Roles = "Admin,Artist")]
         public IActionResult Delete(int artistId)
         {

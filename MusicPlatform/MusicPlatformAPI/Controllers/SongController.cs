@@ -39,7 +39,7 @@ namespace MusicPlatformAPI.Controllers
 
         [HttpPost("add")]
         [Authorize(Roles = "Admin,Artist")]
-        public IActionResult Add(SongDto song)
+        public IActionResult Add(AddSongDto song)
         {
             var userId = User.FindFirst("userId")?.Value;
 
@@ -61,7 +61,7 @@ namespace MusicPlatformAPI.Controllers
             return Ok(result);
         }
 
-        [HttpPatch("edit")]
+        [HttpPut("edit")]
         [Authorize(Roles = "Admin,Artist")]
         public IActionResult Edit(SongUpdateDto songUpdate)
         {
@@ -85,7 +85,7 @@ namespace MusicPlatformAPI.Controllers
             return Ok();
         }
 
-        [HttpDelete("delete")]
+        [HttpDelete("delete/{songId}")]
         [Authorize(Roles = "Admin,Artist")]
         public IActionResult Delete(int songId)
         {
